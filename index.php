@@ -5,7 +5,7 @@ ini_set('display_errors', 'on');
 
 date_default_timezone_set('Asia/Shanghai');
 mb_internal_encoding('utf-8');
-//define('DEBUG', TRUE);
+define('DEBUG', TRUE);
 
 //define('COLA_ROOT', dirname(__DIR__));
 
