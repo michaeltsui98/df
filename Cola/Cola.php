@@ -220,11 +220,11 @@ class Cola
      * @param string $dir
      * @return boolean
      */
-    public static function loadClass($className, $dir = '')
+    public static function loadClass($className, $dir = NULL)
     {
-        if (class_exists($className, false) || interface_exists($className, false)) {
+        /* if (class_exists($className, false) || interface_exists($className, false)) {
             return true;
-        } 
+        }  */
         
         $key = "_class.{$className}";
         if (null !== self::$_config->get($key)) {
@@ -232,16 +232,20 @@ class Cola
             return true;
         }
        
-        if (empty($dir)) {
-            $dir = ('Cola' == substr($className, 0, 4)) ? substr(COLA_DIR, 0, -4) : '';
+        if ($dir===NULL) {
+            if ('Cola' == substr($className, 0, 4)) {
+                $dir =  substr(COLA_DIR, 0, -4);
+            }else{
+                $dir = '';
+            }
             
         } else {
             $dir = rtrim($dir, '\\/') . DIRECTORY_SEPARATOR;
         }
-        if(strpos($className, 'Tables') !== FALSE 
-                AND self::loadTableClass($className)){
+        if(strpos($className, 'Tables') !== FALSE){ 
+            self::loadTableClass($className);
             return TRUE;
-        }
+        } 
         $file = strtr($className,array('_'=>DIRECTORY_SEPARATOR)) . '.php';
          
         
@@ -252,9 +256,9 @@ class Cola
         //var_dump($classFile);
         
         include($classFile);
-          if (!class_exists($className, false)) {
+         /*  if (!class_exists($className, false)) {
             throw new Cola_Exception("Unable to load class: $className",array(), E_USER_WARNING);
-        }  
+        }   */
         return TRUE;
          
         
@@ -421,10 +425,9 @@ class Cola
         }
 
         if (isset($this->_dispatchInfo['controller'])) {
-           // self::loadClass($this->_dispatchInfo['controller']);die;
-            //var_dump($this->_dispatchInfo['controller'], self::$_config->get('_controllersHome'));die;
+            
             if (!self::loadClass($this->_dispatchInfo['controller'])) {
-                //if (!self::loadClass($this->_dispatchInfo['controller'], self::$_config->get('_controllersHome'))) {
+                
                 throw new Cola_Exception_Dispatch("Can't load controller:{$this->_dispatchInfo['controller']}");
             }
             $cls = new $this->_dispatchInfo['controller']();

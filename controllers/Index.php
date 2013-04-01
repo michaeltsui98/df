@@ -29,8 +29,8 @@ class Controllers_Index extends Cola_Controller
         ->where('ad_id', '=', '292')
         ->getCol()
         ->execute();  */
-        $model = new Models_Index();
-        $res = $model->test();
+        //$model = new Models_Index();
+        $res = $this->_model->test();
        // $res = $this->model('Index','models')->test();
         var_dump($res); 
     }

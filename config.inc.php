@@ -43,7 +43,7 @@ $config = array(
     ),
     '_xhprof' => array(
             'logDir' => 'D:\KKserv\wwwroot\xhprof\xhprof_log',
-            'namespace' => 'cjsq',
+            'namespace' => 'df',
             'viewUrl' => 'http://localhost/xhprof/xhprof_html/index.php',
     ),
 
