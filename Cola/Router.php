@@ -155,9 +155,9 @@ class Cola_Router
         $pathInfo = trim($pathInfo, '/');
 
         foreach ($this->_rules as $regex => $rule) {
-
+             
             $res = preg_match($regex, $pathInfo, $values);
-
+            
             if (0 === $res) continue;
 
             if (isset($rule['maps']) && count($rule['maps'])) {
@@ -173,7 +173,7 @@ class Cola_Router
 
                 Cola::setReg('_params', $params);
             }
-
+            
             return $rule;
         }
 

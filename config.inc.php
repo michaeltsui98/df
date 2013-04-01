@@ -28,7 +28,9 @@ $config = array(
         ),
             
     ),
-
+    '_routecache' => array(
+            'adapter' => 'File'
+    ),
     '_db' => array(
         'adapter' => 'Mysqli',
         

@@ -4,7 +4,7 @@
  * Define
  */
 defined('COLA_DIR') || define('COLA_DIR', dirname(__FILE__));
-require_once COLA_DIR . '/Config.php';
+require COLA_DIR . '/Config.php';
 
 class Cola
 {
@@ -100,34 +100,26 @@ class Cola
 
         self::$_config->merge($config);
         
-        set_exception_handler(array('Cola_Exception', 'handler'));
-        set_error_handler ( array ('Cola','error_handler' ) );
-        
-        /* if(self::$_cacheClass === TRUE){
-            static::$_loadedClass = static::cache('loader_class');
-        } */
-        //register_shutdown_function ( array ('Cola','shutdown_handler') );
+         if(defined('DEBUG')===TRUE){
+            set_exception_handler(array('Cola_Exception', 'handler'));
+            set_error_handler ( array ('Cola','error_handler' ) );
+        } 
+       
         return self::$_instance;
     }
-    public static function shutdown_handler() {
-        
-        if (self::$_cacheClass === TRUE AND self::$_cacheClassChanged === TRUE){
-            static::cache('loader_class', self::$_loadedClass);
-        }
- 
-    }
+     
     public static function cache($name, $data = NULL, $lifetime = NULL) {
-        
-        $regName = "_cache_cache";
-        if (!$this->_cache = Cola::getReg($regName)) {
-            $config = (array) Cola::$_config->get('_cache');
-            $_cache = Cola_Com_Cache::factory($config);
-            Cola::setReg($regName, $_cache);
+        static $cache = null;
+        $regName = "_cache";
+        if (!$cache = Cola::getReg($regName)) {
+            $config = (array) Cola::$_config->get('_routecache');
+            $cache = Cola_Com_Cache::factory($config);
+            Cola::setReg($regName, $cache);
         }
         if($data===NULL){
-            return $_cache->get($name);
+            return $cache->get($name);
         }
-        return (bool) $_cache->set($name, $data, $lifetime);
+        return (bool) $cache->set($name, $data, $lifetime);
     }
     public static function error_handler($code, $error, $file = NULL, $line = NULL) {
     
@@ -425,19 +417,25 @@ class Cola
         }
 
         if (isset($this->_dispatchInfo['controller'])) {
-            
-            if (!self::loadClass($this->_dispatchInfo['controller'])) {
+           // var_dump($this->_dispatchInfo);die;
+            /* if (!self::loadClass($this->_dispatchInfo['controller'], self::$_config->get('_controllersHome'))) {
                 
                 throw new Cola_Exception_Dispatch("Can't load controller:{$this->_dispatchInfo['controller']}");
-            }
+            } */
             $cls = new $this->_dispatchInfo['controller']();
-        }
-
+        } 
+        
         if (isset($this->_dispatchInfo['action'])) {
-            $func = isset($cls) ? array($cls, $this->_dispatchInfo['action']) : $this->_dispatchInfo['action'];
-            if (!is_callable($func, true)) {
-                throw new Cola_Exception_Dispatch("Can't dispatch action:{$this->_dispatchInfo['action']}");
+           // $func = isset($cls) ? array($cls, $this->_dispatchInfo['action']) : $this->_dispatchInfo['action'];
+            if(isset($cls)){
+                $func = array($cls,$this->_dispatchInfo['action']);
+            }else{
+                $func = $this->_dispatchInfo['action'];
             }
+            
+            /* if (!is_callable($func, true)) {
+                throw new Cola_Exception_Dispatch("Can't dispatch action:{$this->_dispatchInfo['action']}");
+            } */
             call_user_func($func);
         }
     }

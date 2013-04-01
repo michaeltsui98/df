@@ -54,10 +54,6 @@ class Cola_Controller
         if (null === $this->_viewsHome) {
             $this->_viewsHome = $this->config['_viewsHome'];
         }
-        Cola_Response::charset();
-       //Cola::registerAutoload('Cola_Controller::loadModel');
-       //spl_autoload_register('Cola_Controller::loadModel');
-         
     }
     
     

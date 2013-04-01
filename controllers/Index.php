@@ -5,10 +5,10 @@ class Controllers_Index extends Cola_Controller
     /**
      * @var Models_Index
      */
-    protected $_model = NULL;
+   protected static  $_model = NULL;
     
     function __construct(){
-        $this->_model = new Models_Index();
+        //self::$_model = new Models_Index();
     }
     
     function indexAction(){
@@ -30,45 +30,57 @@ class Controllers_Index extends Cola_Controller
         ->getCol()
         ->execute();  */
         //$model = new Models_Index();
-        $res = $this->_model->test();
+       // $res = self::$_model->test();
        // $res = $this->model('Index','models')->test();
-        var_dump($res); 
+       //throw new Cola_Exception('eroror test');
+        var_dump('dfdfdf'); 
     }
+    function setCacheAction(){
+        $res = Cola::cache('test','i love you ',6000);
+        
+    }
+    function getCacheAction(){
+         
+         
+        phpinfo();
+    }
+ 
+    
     function testOrmAction(){
         $model = new Models_Index();
         $res = $model->orm();
         var_dump($res);
     }
     function delAction(){
-        $res = $this->_model->ormDel();
+        $res = self::$_model->ormDel();
         var_dump($res);
     }
     function updateAction(){
-        $res = $this->_model->ormUpdate();
+        $res = self::$_model->ormUpdate();
         var_dump($res);
     }
     function insertAction(){
-        $res = $this->_model->ormInsert();
+        $res = self::$_model->ormInsert();
         var_dump($res);
     }
     function tableAction(){
-        $res = $this->_model->tableQuery();
+        $res = self::$_model->tableQuery();
         var_dump($res);
     }
     function modelAction(){
-        $res = $this->_model->modelCount();
+        $res = self::$_model->modelCount();
         var_dump($res);
     }
     function modelInsertAction(){
-        $res = $this->_model->modelInsert();
+        $res = self::$_model->modelInsert();
         var_dump($res);
     }
     function modelUpdateAction(){
-        $res = $this->_model->modelUpdate();
+        $res = self::$_model->modelUpdate();
         var_dump($res);
     }
     function modelDelAction(){
-        $res = $this->_model->modelDel();
+        $res = self::$_model->modelDel();
         var_dump($res);
     }
     
