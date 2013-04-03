@@ -9,6 +9,7 @@ class Models_Sub_net extends Cola_Model
         }
         return self::$_instance;
     }
+    
     function subNet(){
        //$this->db()->col();
        $sql = "select ad_id from keke_witkey_ad where ad_id= 292";

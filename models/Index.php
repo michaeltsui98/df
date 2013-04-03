@@ -9,11 +9,18 @@ class Models_Index extends Cola_Model
         
         return $this->db()->col($sql);
     }
+    
+    function testModel(){
+        
+       return  $this->count('ad_id = 292','keke_witkey_ad');
+    }
 
     function orm ()
     {
-        return Orm_DB::select('ad_id')->from('keke_witkey_ad')
+        return Orm_DB::select('ad_id')
+            ->from('keke_witkey_ad')
             ->where('ad_id', '=', 292)
+            
             ->getCol()
             ->execute();
     }

@@ -33,7 +33,11 @@ class Controllers_Index extends Cola_Controller
        // $res = self::$_model->test();
        // $res = $this->model('Index','models')->test();
        //throw new Cola_Exception('eroror test');
-        var_dump('dfdfdf'); 
+        //$i = 5/0;
+        $model = new Models_Index();
+        $res = $model->testModel();
+        
+        var_dump($res);
     }
     function setCacheAction(){
         $res = Cola::cache('test','i love you ',6000);
