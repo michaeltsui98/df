@@ -12,6 +12,15 @@ class Controllers_Index extends Cola_Controller
     }
     
     function indexAction(){
+        
+       
+
+        
+        
+               
+        self::request()->isAjax();
+       
+        
          /* echo "home_page".__FUNCTION__;
         echo '<br/>';
         //直接调用模型
@@ -34,10 +43,17 @@ class Controllers_Index extends Cola_Controller
        // $res = $this->model('Index','models')->test();
        //throw new Cola_Exception('eroror test');
         //$i = 5/0;
-        $model = new Models_Index();
-        $res = $model->testModel();
+        //$model = new Models_Index();
+        //$res = $model->testModel();
         
-        var_dump($res);
+        //var_dump($res);
+        
+        $model = new Models_Index();
+        $model->test(); 
+        
+       // Models_Sub_net::init()->subNet();
+        
+        $this->request->charset();
     }
     function setCacheAction(){
         $res = Cola::cache('test','i love you ',6000);

@@ -3,6 +3,8 @@
 class Models_Index extends Cola_Model
 {
 
+    
+    
     function test ()
     {
         $sql = "select `ad_id` from keke_witkey_ad where ad_id = 292";

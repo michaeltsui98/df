@@ -310,10 +310,17 @@ class Cola_Controller
     }
 
     /**
-     * Dynamic get vars
-     *
-     * @param string $key
+     * @return Cola_Request
      */
+    public static function request(){
+        static $request = NULL;
+        if($request ===NULL){
+            return $request =  new Cola_Request();
+        }
+       return  $request;
+    }
+   
+    
     public function __get($key)
     {
         switch ($key) {

@@ -216,7 +216,7 @@ class Cola
     {
         /* if (class_exists($className, false) || interface_exists($className, false)) {
             return true;
-        }  */
+        }  */ 
         
         $key = "_class.{$className}";
         if (null !== self::$_config->get($key)) {

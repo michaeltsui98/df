@@ -3,6 +3,10 @@
 class Models_Sub_net extends Cola_Model
 {
     protected static $_instance = NULL;
+    /**
+     * 
+     * @return self
+     */
     public static function init(){
         if(self::$_instance ===NULL){
             return self::$_instance = new static();
