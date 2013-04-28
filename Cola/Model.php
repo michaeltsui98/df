@@ -82,7 +82,7 @@ class Cola_Model
     public function cached($func, $args = array(), $expire = 60)
     {
         $key = md5(get_class($this) . $func . serialize($args));
-
+      
         if (!$data = $this->_cache->get($key)) {
             $data = call_user_func_array(array($this, $func), $args);
             $this->_cache->set($key, $data, $expire);

@@ -11,6 +11,9 @@ class Models_Index extends Cola_Model
         
         return $this->db()->col($sql);
     }
+    function testCache(){
+        return  $this->cached('test');
+    }
     
     function testModel(){
         

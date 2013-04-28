@@ -49,7 +49,7 @@ class Controllers_Index extends Cola_Controller
         //var_dump($res);
         
         $model = new Models_Index();
-        $model->test(); 
+        $model->testCache(); 
         
        // Models_Sub_net::init()->subNet();
         
