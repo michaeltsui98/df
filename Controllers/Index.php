@@ -12,15 +12,10 @@ class Controllers_Index extends Cola_Controller
     }
     
     function indexAction(){
-        
-       
-
-        
-        
-               
+            
         self::request()->isAjax();
-       
         
+        $this->view()->display('view.php','views/Index');
          /* echo "home_page".__FUNCTION__;
         echo '<br/>';
         //直接调用模型
@@ -48,12 +43,8 @@ class Controllers_Index extends Cola_Controller
         
         //var_dump($res);
         
-        $model = new Models_Index();
-        $model->testCache(); 
+       
         
-       // Models_Sub_net::init()->subNet();
-        
-        $this->request->charset();
     }
     function setCacheAction(){
         $res = Cola::cache('test','i love you ',6000);

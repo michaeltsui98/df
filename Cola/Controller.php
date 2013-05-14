@@ -308,7 +308,7 @@ class Cola_Controller
     {
         $this->$key = $value;
     }
-
+     
     /**
      * @return Cola_Request
      */
@@ -318,6 +318,16 @@ class Cola_Controller
             return $request =  new Cola_Request();
         }
        return  $request;
+    }
+    /**
+     * @return Cola_Response|Ambigous <NULL, Cola_Response>
+     */
+    public static function response(){
+    	static $response = NULL;
+    	if($response === NULL){
+    		return $response = new Cola_Response();
+    	}
+    	return $response;
     }
    
     

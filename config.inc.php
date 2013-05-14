@@ -4,29 +4,7 @@ $config = array(
         '/^view\/?(\d+)?$/' => array(
             'controller' => 'IndexController',
             'action' => 'viewAction',
-            'maps' => array(
-                1 => 'id'
-            ),
-            'defaults' => array(
-                'id' => 9527
-            )
         ),
-
-        '/^v-?(\d+)?$/' => array(
-            'controller' => 'IndexController',
-            'action' => 'viewAction',
-            'maps' => array(
-                1 => 'id'
-            ),
-            'defaults' => array(
-                'id' => 9527
-            )
-        ),
-        '/^dirNet\/(\w+)$/i' => array(
-                'controller' => 'Controllers_Dir_Net',
-                'action' => 'indexAction',
-        ),
-            
     ),
     '_routecache' => array(
             'adapter' => 'File'
@@ -49,8 +27,8 @@ $config = array(
             'viewUrl' => 'http://localhost/xhprof/xhprof_html/index.php',
     ),
 
-    '_modelsHome'      => 'models',
-    '_controllersHome' => 'controllers',
+    '_modelsHome'      => 'Models',
+    '_controllersHome' => 'Controllers',
     '_viewsHome'       => 'views',
     '_widgetsHome'     => 'widgets'
 );
