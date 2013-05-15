@@ -11,6 +11,6 @@ sub.html
 
 </p>
 
-<?php var_dump($row['disk_id']); ?>
+<?php var_dump($row); ?>
 </body>
 </html>

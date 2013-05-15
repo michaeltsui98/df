@@ -186,13 +186,14 @@ class Tables_Model
      * @param string $filed 可以是字段名，也可以是表达式
      * @return Ambigous <string, NULL, mixed>
      */
-    function col($filed){
+    function col($filed=NULL){
         $filed OR $filed = '*';
         if(self::$where){
             $sql = "select $filed from $this->tableName where ".self::$where;
         }else{
             $sql = "select $filed from $this->tableName";
         }
+        
         $this->reset();
         return self::$db->col($sql);
     }

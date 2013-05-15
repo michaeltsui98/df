@@ -52,6 +52,17 @@ class Cola_Model
     const SYSTEM_ERROR = -8;
     const VALIDATE_ERROR = -7;
 
+    protected static $_instance = NULL;
+    /**
+     * @return self
+     */
+    public static function init(){
+        if(self::$_instance === NULL){
+            self::$_instance = new static();
+        }
+        return self::$_instance;
+    }
+    
     /**
      * Load data
      *
