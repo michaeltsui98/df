@@ -38,7 +38,7 @@ abstract class Orm_Database_Query_Builder_Where extends Orm_Database_Query_Build
 	 * @param   mixed   $column  column name or array($column, $alias) or object
 	 * @param   string  $op      logic operator
 	 * @param   mixed   $value   column value
-	 * @return  $this
+	 * @return  self
 	 */
 	public function and_where($column, $op, $value)
 	{
@@ -53,7 +53,7 @@ abstract class Orm_Database_Query_Builder_Where extends Orm_Database_Query_Build
 	 * @param   mixed   $column  column name or array($column, $alias) or object
 	 * @param   string  $op      logic operator
 	 * @param   mixed   $value   column value
-	 * @return  $this
+	 * @return  self
 	 */
 	public function or_where($column, $op, $value)
 	{
@@ -65,7 +65,7 @@ abstract class Orm_Database_Query_Builder_Where extends Orm_Database_Query_Build
 	/**
 	 * Alias of and_where_open()
 	 *
-	 * @return  $this
+	 * @return  self
 	 */
 	public function where_open()
 	{
@@ -75,7 +75,7 @@ abstract class Orm_Database_Query_Builder_Where extends Orm_Database_Query_Build
 	/**
 	 * Opens a new "AND WHERE (...)" grouping.
 	 *
-	 * @return  $this
+	 * @return  self
 	 */
 	public function and_where_open()
 	{
@@ -87,7 +87,7 @@ abstract class Orm_Database_Query_Builder_Where extends Orm_Database_Query_Build
 	/**
 	 * Opens a new "OR WHERE (...)" grouping.
 	 *
-	 * @return  $this
+	 * @return  self
 	 */
 	public function or_where_open()
 	{
@@ -99,7 +99,7 @@ abstract class Orm_Database_Query_Builder_Where extends Orm_Database_Query_Build
 	/**
 	 * Closes an open "WHERE (...)" grouping.
 	 *
-	 * @return  $this
+	 * @return  self
 	 */
 	public function where_close()
 	{
@@ -110,7 +110,7 @@ abstract class Orm_Database_Query_Builder_Where extends Orm_Database_Query_Build
 	 * Closes an open "WHERE (...)" grouping or removes the grouping when it is
 	 * empty.
 	 *
-	 * @return  $this
+	 * @return  self
 	 */
 	public function where_close_empty()
 	{
@@ -129,7 +129,7 @@ abstract class Orm_Database_Query_Builder_Where extends Orm_Database_Query_Build
 	/**
 	 * Closes an open "WHERE (...)" grouping.
 	 *
-	 * @return  $this
+	 * @return  self
 	 */
 	public function and_where_close()
 	{
@@ -141,7 +141,7 @@ abstract class Orm_Database_Query_Builder_Where extends Orm_Database_Query_Build
 	/**
 	 * Closes an open "WHERE (...)" grouping.
 	 *
-	 * @return  $this
+	 * @return  self
 	 */
 	public function or_where_close()
 	{
@@ -155,7 +155,7 @@ abstract class Orm_Database_Query_Builder_Where extends Orm_Database_Query_Build
 	 *
 	 * @param   mixed   $column     column name or array($column, $alias) or object
 	 * @param   string  $direction  direction of sorting
-	 * @return  $this
+	 * @return  self
 	 */
 	public function order_by($column, $direction = NULL)
 	{
@@ -168,7 +168,7 @@ abstract class Orm_Database_Query_Builder_Where extends Orm_Database_Query_Build
 	 * Return up to "LIMIT ..." results
 	 *
 	 * @param   integer  $number  maximum results to return or NULL to reset
-	 * @return  $this
+	 * @return  self
 	 */
 	public function limit($number)
 	{

@@ -168,6 +168,26 @@ class Tables_Model
         $this->reset();
         return self::$db->col($sql);
     }
+    /**
+     * 返回一行数据
+     * @return array
+     */
+    function row(){
+        $sql =  "select * from $this->tableName where " .self::$where;
+        $this->reset();
+        return (array)self::$db->row($sql);
+    }
+    /**
+     * 单个字段的值 
+     * @param string $filed 可以是字段名，也可以是表达式
+     * @return Ambigous <string, NULL, mixed>
+     */
+    function col($filed){
+        $sql = "select $filed from $this->tableName where ".self::$where;
+        $this->reset();
+        return self::$db->col($sql);
+    }
+    
 
     function reset ()
     {
