@@ -173,7 +173,11 @@ class Tables_Model
      * @return array
      */
     function row(){
-        $sql =  "select * from $this->tableName where " .self::$where;
+        if(self::$where){
+            $sql =  "select * from $this->tableName where " .self::$where;
+        }else{
+            $sql =  "select * from $this->tableName";
+        }
         $this->reset();
         return (array)self::$db->row($sql);
     }
@@ -183,7 +187,12 @@ class Tables_Model
      * @return Ambigous <string, NULL, mixed>
      */
     function col($filed){
-        $sql = "select $filed from $this->tableName where ".self::$where;
+        $filed OR $filed = '*';
+        if(self::$where){
+            $sql = "select $filed from $this->tableName where ".self::$where;
+        }else{
+            $sql = "select $filed from $this->tableName";
+        }
         $this->reset();
         return self::$db->col($sql);
     }

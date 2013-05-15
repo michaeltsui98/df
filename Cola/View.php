@@ -56,7 +56,7 @@ class Cola_View
      * Render view
      *
      */
-    protected function _render($tpl, $dir = null)
+    protected function _render_aa($tpl, $dir = null)
     {
         if (null === $dir) $dir = $this->_basePath;
 
@@ -65,6 +65,20 @@ class Cola_View
         ob_implicit_flush(0);
         $file = $dir . $tpl;
         include $file;
+        return ob_get_clean();
+    }
+    
+    protected function _render($tpl, $dir = null)
+    {
+        //if (null === $dir) $dir = $this->_basePath;
+    
+        //if ($dir) $dir = rtrim($dir, '/\\') . DIRECTORY_SEPARATOR;
+        ob_start();
+        ob_implicit_flush(0);
+        //$file = $dir . $tpl;
+        $view = (array)$this;
+        extract($view);
+        include Cola_Tpl::template($tpl);
         return ob_get_clean();
     }
 

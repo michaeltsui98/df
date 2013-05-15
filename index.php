@@ -5,8 +5,10 @@ date_default_timezone_set ( 'Asia/Shanghai' );
 mb_internal_encoding ( 'utf-8' );
 define ( 'DEBUG', TRUE );
 header ( "Content-Type:text/html;charset=utf-8" );
+define('S_ROOT', __DIR__.DIRECTORY_SEPARATOR);
 require 'Cola/Cola.php';
 $cola = Cola::getInstance ();
+
 //$xh = new Cola_Com_Xhprof ();
 $benchmark = new Cola_Com_Benchmark ();
 $cola->boot ()->dispatch ();
