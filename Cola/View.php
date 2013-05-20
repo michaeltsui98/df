@@ -56,7 +56,7 @@ class Cola_View
      * Render view
      *
      */
-    protected function _render_aa($tpl, $dir = null)
+    protected function _render_php($tpl, $dir = null)
     {
         if (null === $dir) $dir = $this->_basePath;
 

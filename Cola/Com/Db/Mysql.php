@@ -212,7 +212,7 @@ class Cola_Com_Db_Mysql extends Cola_Com_Db_Abstract
      */
     public function escape($str)
     {
-        return  "'" . mysql_escape_string($str)  . "'";
+        return  "'" . mysql_real_escape_string($str)  . "'";
     }
 
     /**

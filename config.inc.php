@@ -18,7 +18,7 @@ $config = array(
             'password' => '123456',
             'database' => 'test',
             'charset' => 'utf8',
-            'persitent' => true
+            'persitent' => false
         
     ),
     '_xhprof' => array(

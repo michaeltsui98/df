@@ -166,6 +166,7 @@ class Tables_Model
             $sql = "select count(*) as count from $this->tableName";
         }
         $this->reset();
+        //die($sql);
         return self::$db->col($sql);
     }
     /**

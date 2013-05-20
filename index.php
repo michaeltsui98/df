@@ -6,11 +6,12 @@ mb_internal_encoding ( 'utf-8' );
 define ( 'DEBUG', TRUE );
 header ( "Content-Type:text/html;charset=utf-8" );
 define('S_ROOT', __DIR__.DIRECTORY_SEPARATOR);
+define('BASE_PATH', '/df');
 require 'Cola/Cola.php';
 $cola = Cola::getInstance ();
 
-//$xh = new Cola_Com_Xhprof ();
+$xh = new Cola_Com_Xhprof ();
 $benchmark = new Cola_Com_Benchmark ();
 $cola->boot ()->dispatch ();
 echo "<br />cost:", $benchmark->cost (), 's';
-//echo $a = $xh->save ();
+echo $a = $xh->save ();

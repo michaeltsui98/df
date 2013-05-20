@@ -34,7 +34,7 @@ class Cola_Tpl {
 		//包含模板
 		$tplfile = S_ROOT .  $tpl . '.htm';
 		$objfile = S_ROOT . self::$tpl_path .DIRECTORY_SEPARATOR. str_replace ( '/', '_', $tpl ) . '.php';
-		//var_dump($tplfile,$objfile);die;
+		//var_dump($tpl,$tplfile,$objfile);die;
 		//read
 		if (! is_file( $tplfile )) {
 			throw  new Cola_Exception($tplfile.'文件不存在！');
@@ -92,11 +92,17 @@ class Cola_Tpl {
 		$var_regexp = "((\\\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)(\[[a-zA-Z0-9_\-\.\"\'\[\]\$\x7f-\xff]+\])*)";
 		$template = preg_replace ( "/\<\!\-\-\{(.+?)\}\-\-\>/s", "{\\1}", $template );
 		$template = preg_replace ( "/([\n\r]+)\t+/s", "\\1", $template );
-		
+		//数组变量
 		$template = preg_replace ( "/(\\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\.([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)/s", "\\1['\\2']", $template );
+		
+		//对象变量
+		
+		$template = preg_replace('/\{\$this-\>(.*)\}/Uis', '<?php echo -this->\\1 ;?>', $template);
+		
 		$template = preg_replace ( "/\{(\\\$[a-zA-Z0-9_\[\]\'\"\$\.\x7f-\xff]+)\}/s", "<?=\\1?>", $template );
 		$template = preg_replace ( "/$var_regexp/es", "Cola_Tpl::addquote('<?=\\1?>')", $template );
 		$template = preg_replace ( "/\<\?\=\<\?\=$var_regexp\?\>\?\>/es", "Cola_Tpl::addquote('<?php echo \\1;?>')", $template );
+		
 		
 		 
 		
@@ -127,6 +133,8 @@ class Cola_Tpl {
 		
 
 		$template = strtr($template, array('<?='=>'<?php echo '));
+		
+		$template = preg_replace('/-this-\>(.*)/Uis', '$this->\\1', $template);
 		
 		return $template;
 	}
@@ -293,7 +301,7 @@ class Cola_Tpl {
 		if(file_exists( S_ROOT . "views/$tplname.htm" )){
 			$tpl = "views/$tplname";
 		}else{
-			$tpl = FALSE;
+			throw new Cola_Exception('views/'.$tplname.'.htm   file is not exists,plase check');
 		}
 		return $tpl;
 	}

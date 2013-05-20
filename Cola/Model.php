@@ -101,6 +101,13 @@ class Cola_Model
 
         return $data;
     }
+    /**
+     * 清除方法缓存
+     */
+    public function unSetCache($func, $args = array()){
+        $key = md5(get_class($this) . $func . serialize($args));
+        return $this->_cache->delete($key);
+    }
 
     /**
      * Init Cola_Com_Cache
