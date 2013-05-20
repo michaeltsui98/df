@@ -24,11 +24,11 @@ class Controllers_Admin_Index extends Controllers_Admin_Base
     {
          
         $this->view->menu = $this->menuAction();
-        $menuOrder = $this->model('Menu');
+        $menuOrder = Models_Admin_Menu::init();
         
-    
+       // var_dump($this->view->menu);
         $latestMenuId = $this->request->param('latestMenuId','');
-       
+        
         if($latestMenuId =='')//这个就是首次进入的
         {
             //如果没有，那么最新的一个会被传入SESSION
@@ -68,7 +68,7 @@ class Controllers_Admin_Index extends Controllers_Admin_Base
     private function menuAction()
     {
         
-        $model = $this->model('Menu');
+        $model = Models_Admin_Menu::init();
         $data = $model->getMenu(0);
         return is_array($data) ? $data : array();
     }
@@ -79,11 +79,10 @@ class Controllers_Admin_Index extends Controllers_Admin_Base
     public function leftMenuAction()
     {
         $menuid = intval($this->request->param('menuid'));
-        $model = $this->model('Menu');
+        $model = Models_Admin_Menu::init();
         $data = $model->getMenu($menuid);
-        $this->response->charset();
         foreach ($data as $_value) {
-            echo '<h3 class="f14"><span class="switchs cu on" title="' . $_value['name'] . '"></span>' . $_value['name'] . '</h3>';
+            echo '<h3 class="f14"><span class="switchs cu on" title="' . $_value['module_title'] . '"></span>' . $_value['module_title'] . '</h3>';
             echo '<ul>';
             $sub_array = $model->getMenu($_value['id']);
             foreach ($sub_array as $_key => $_m) {
@@ -95,7 +94,7 @@ class Controllers_Admin_Index extends Controllers_Admin_Base
                 } else {
                     $classname = 'class="sub_menu"';
                 }
-                echo '<li id="_MP' . $_m['id'] . '" ' . $classname . '><a href="javascript:_MP(' . $_m['id'] . ',\'/index.php/' . $_m['c'] . '/' . $_m['a'] . $data . '\');" hidefocus="true" style="outline:none;">' . $_m['name'] . '</a></li>';
+                echo '<li id="_MP' . $_m['id'] . '" ' . $classname . '><a href="javascript:_MP(' . $_m['id'] . ',\''.BASE_PATH.'/index.php/' . $_m['module_controller'] . '/' . $_m['module_action'] . $data . '\');" hidefocus="true" style="outline:none;">' . $_m['module_title'] . '</a></li>';
             }
             echo '</ul>';
         }
@@ -107,9 +106,8 @@ class Controllers_Admin_Index extends Controllers_Admin_Base
     public function currentPosAction()
     {
         $menuid = intval($this->request->param('menuid'));
-    
-        $model = $this->model('Menu');
-        echo $model->getCurrentPos($menuid);
+         
+        echo Models_Admin_Menu::init()->getCurrentPos($menuid);
     }
     
     /**
@@ -118,48 +116,9 @@ class Controllers_Admin_Index extends Controllers_Admin_Base
     public function secretaryAction()
     {
     
-        $usertype = $_SESSION['user']['type'];
-    
-        //1，2，3是学校用户
-        //4是校长，没有小秘书
-        //5是区县用户 有区县小秘书
-        //6是市州用户，有市州小秘书
-        //7是省级用户，有省级小秘书，
-        //12，13分别是区县纠风和市州纠风，他们公用省级的小秘书
-        if ($usertype == '1' || $usertype == '2' || $usertype == '3') {
-            //高中小学的小秘书
-            $this->secretaryXxAction();
-        } else if ($usertype == '5') {
-            $this->secretaryQxAction();
-        } else if ($usertype == '6') {
-            $this->secretaryShiAction();
-        } else if ($usertype == '7' OR $usertype == '12' OR $usertype == '13') {
-            $this->secretaryshengAction();
-        }
-        $this->view->displayInfor = $this->displayInfor;
-        $this->display("secretary.php", "views/Index");
+        $this->view->info = '平台管理首页';
+        $this->display("admin/secretary");
     }
-    
-   
-    
-   
-    
-     
-     
-    
-    /**
-     * 小秘书信息数组数据处理
-     */
-    function setShowArray($_content, $_mainUrl)
-    {
-        $displayInfor = $this->displayInfor;
-        $ll = count($displayInfor);
-        $this->displayInfor[$ll]["content"] = $_content;
-        $this->displayInfor[$ll]["mainUrl"] = $_mainUrl;
-        return $this->displayInfor;
-    }
-    
-   
     
     /**
      * 锁屏
@@ -173,4 +132,3 @@ class Controllers_Admin_Index extends Controllers_Admin_Base
     
 }
 
-?>

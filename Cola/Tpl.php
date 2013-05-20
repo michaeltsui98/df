@@ -8,7 +8,7 @@ $_K ['i'] = 0;
 $_K ['block_search'] = $_K ['block_replace'] = array ();
 define('CHARSET', 'utf-8');
 //模板缓存
-define(TPL_CACHE, 1);
+define(TPL_CACHE, 0);
 class Cola_Tpl {
 	
 	static private  $tpl_path = 'views/tpl_c';
@@ -96,7 +96,6 @@ class Cola_Tpl {
 		$template = preg_replace ( "/(\\\$[a-zA-Z0-9_\[\]\'\"\$\x7f-\xff]+)\.([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)/s", "\\1['\\2']", $template );
 		
 		//对象变量
-		
 		$template = preg_replace('/\{\$this-\>(.*)\}/Uis', '<?php echo -this->\\1 ;?>', $template);
 		
 		$template = preg_replace ( "/\{(\\\$[a-zA-Z0-9_\[\]\'\"\$\.\x7f-\xff]+)\}/s", "<?=\\1?>", $template );

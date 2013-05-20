@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-        <title>湖北省教辅材料选用辅助管理平台</title>
+        <title>管理平台</title>
         <link href="{BASE_PATH}/statics/css/reset.css" rel="stylesheet" type="text/css" />
         <link href="{BASE_PATH}/statics/css/system.css" rel="stylesheet" type="text/css" />
         <link href="{BASE_PATH}/statics/css/dialog.css" rel="stylesheet" type="text/css" />
@@ -27,7 +27,7 @@
         <div class="header">
             <div class="logo lf" >
                 <span style="color: #ffffff;" id="changeYear">切换期号</span><br/>
-                <span style="color: #ffffff;"><?php echo $this->latestMenuTitle; ?></span>
+                <span style="color: #ffffff;">{$this->latestMenuTitle}</span>
             </div>
             <div class="rt">
                 <div class="tab_style white cut_line text-r">
@@ -36,20 +36,19 @@
                 <div class="style_but"></div>
             </div>
             <div class="col-auto" style="overflow: visible">
-                <div class="log white cut_line">您好！<?php echo $_SESSION['user']['real_name']; ?><span>|</span>
+                <div class="log white cut_line">您好！{ echo $_SESSION['user']['real_name']; }<span>|</span>
                     <a href="/index.php/user/logout">[退出]</a><span>|</span>
                     <a href="/index.php/user/index" id="site_homepage">首页</a>
                 </div>
                 <ul class="nav white" id="top_menu">
-                    <?php
-                    foreach ($this->menu as $_value) {
-                        if ($_value['id'] == 8) {
-                            echo '<li id="_M' . $_value['id'] . '" class="on top_menu"><a href="javascript:_M(' . $_value['id'] . ', \'/index.php/index/leftMenu/menuid/\')" hidefocus="true" style="outline:none;">' . $_value['name'] . '</a></li>';
-                        } else {
-                            echo '<li id="_M' . $_value['id'] . '" class="top_menu"><a href="javascript:_M(' . $_value['id'] . ', \'/index.php/index/leftMenu/menuid/\')"  hidefocus="true" style="outline:none;">' . $_value['name'] . '</a></li>';
-                        }
-                    }
-                    ?>
+                    {loop $this->menu  $_value}
+					  {if $_value['id'] == 8}
+					    <li id="_M{$_value['id']}" class="on top_menu"><a href="javascript:_M({$_value['id']}, '{BASE_PATH}/index.php/Admin_Index/leftMenu/menuid/')" hidefocus="true" style="outline:none;">{$_value['module_title']}</a></li>
+					  {else}
+					    <li id="_M{$_value['id']}" class="top_menu"><a href="javascript:_M({$_value['id']}, '{BASE_PATH}/index.php/Admin_Index/leftMenu/menuid/')"  hidefocus="true" style="outline:none;">{$_value['module_title']}</a></li>
+					  {/if}
+					    
+					{/loop}
                 </ul>
             </div>
         </div>
@@ -70,7 +69,7 @@
                     当前位置：<span id="current_pos"></span></div>
                 <div class="col-1">
                     <div class="content" style="position:relative; overflow:hidden">
-                        <iframe name="right" id="rightMain" src="/index.php/index/secretary" frameborder="false" scrolling="auto" style="overflow-x:hidden;border:none; margin-bottom:30px" width="100%" height="auto" allowtransparency="true"></iframe>
+                        <iframe name="right" id="rightMain" src="{BASE_PATH}/index.php/Admin_Index/secretary" frameborder="false" scrolling="auto" style="overflow-x:hidden;border:none; margin-bottom:30px" width="100%" height="auto" allowtransparency="true"></iframe>
                         <div class="fav-nav">
                             <div id="panellist"></div>
                         </div>
@@ -109,7 +108,7 @@
             //站点下拉菜单
             $(function(){
                 //默认载入左侧菜单
-                $("#leftMain").load("/index.php/index/leftMenu/menuid/8");
+                $("#leftMain").load("{BASE_PATH}/index.php/Admin_Index/leftMenu/menuid/8");
             });
 
             //左侧开关
@@ -133,7 +132,7 @@
                 //$("#rightMain").attr('src', targetUrl);
                 $('.top_menu').removeClass("on");
                 $('#_M'+menuid).addClass("on");
-                $.get("/index.php/index/currentPos/menuid/"+menuid, function(data){
+                $.get("{BASE_PATH}/index.php/Admin_Index/currentPos/menuid/"+menuid, function(data){
                     $("#current_pos").html(data);
                 });
                 //当点击顶部菜单后，隐藏中间的框架
@@ -149,7 +148,7 @@
                 $("#rightMain").attr('src', targetUrl);
                 $('.sub_menu').removeClass("on fb blue");
                 $('#_MP'+menuid).addClass("on fb blue");
-                $.get("/index.php/index/currentPos/menuid/"+menuid, function(data){
+                $.get("{BASE_PATH}/index.php/Admin_Index/currentPos/menuid/"+menuid, function(data){
                     $("#current_pos").html(data+'<span id="current_pos_attr"></span>');
                 });
                 $("#current_pos").data('clicknum', 1);
@@ -168,7 +167,7 @@
                 })
             });
             function lock_screen() {
-                $.get("/index.php/index/lockScreen");
+                $.get("{BASE_PATH}/index.php/Admin_Index/lockScreen");
                 $('#dvLockScreen').css('display','');
             }
             function check_screenlock() {
@@ -199,13 +198,9 @@
             $("#changeYear").powerFloat({
                 width: "90",
                 target: [
-                <?php
-                    foreach($this->fiveMenus as $key => $val)
-                    {
-                        echo "{href:'/index.php/index/main/latestMenuId/".$val['menu_id']."',text:'".$val['menu_name']."'},";
-                    }
-                    //echo "{href:'/index.php/index/main',text:'测试链接'},";
-                ?>
+                {loop $fiveMenus   $key   $val}
+				  {href:"{BASE_PATH}/index.php/Admin_Index/main/latestMenuId/{$val['menu_id']}",text:"{$val['menu_name']}"},
+				{/loop}
                 ],
                 targetMode: "list"
             });
