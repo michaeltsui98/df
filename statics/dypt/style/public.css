@@ -1,0 +1,423 @@
+body {
+	color:#383838;
+	font-size:12px;
+	text-align:center;
+	line-height:120%;
+	padding:0;
+	margin:0;
+}
+
+div,h1,h2,h3,h4,h5,h6,ol,ul,li,dl,dt,dd,form,input,select,textarea {
+	text-align:left;
+	padding:0;
+	margin:0;
+}
+
+ol,ul,li {
+	list-style:none;
+}
+
+p {
+	padding:0;
+	margin:0;
+}
+
+img {
+	vertical-align:middle;
+	border:none;
+}
+
+a:link,a:visited {
+	color:#747474;
+	text-decoration:none;
+}
+
+a:hover {
+	color:#7e705f;
+	text-decoration:underline;
+}
+
+a.orangeA:link,a.orangeA:visited {
+	color:#7e705f;
+	text-decoration:none;
+}
+
+a.orangeA:hover {
+	color:#746552;
+	text-decoration:underline;
+}
+
+a.grayA:link,a.grayA:visited {
+	color:#b5b5b5;
+	text-decoration:none;
+}
+
+a.grayA:hover {
+	color:#7e705f;
+	text-decoration:underline;
+}
+
+.grayTxt {
+	color:#b5b5b5;
+}
+
+.floatL {
+	float:left;
+}
+
+.floatR {
+	float:right;
+}
+
+.clearFloat {
+	clear:both;
+}
+
+/*头部*/
+.askApps_header {
+	width:980px;
+	height:102px;
+	overflow:hidden;
+	margin:0 auto;
+	border:1px solid #f0f0f0;
+	border-radius:4px;
+	box-shadow:0 2px 2px 0 #f7f7f7;
+}
+
+.askApps_headerBox {
+	width:978px;
+	height:100px;
+	border:1px solid #fff;
+	border-radius:4px;
+	background:url(../images/SQsiteTagBg.gif) repeat left top;
+}
+
+.askApps_logo {
+	width:350px;
+	padding:15px 0 0 12px;
+}
+
+.askApps_logo div {
+	width:64px;
+	height:64px;
+	overflow:hidden;
+	border-radius:7px;
+	border:3px solid #f2f2f2;
+}
+
+.askApps_logo img {
+	width:64px;
+	height:64px;
+	overflow:hidden;
+	border-radius:4px;
+}
+
+.askApps_logo h2 {
+	font-size:14px;
+	line-height:25px;
+	padding:12px 0 0 80px;
+}
+
+.askApps_logo h2 span {
+	color:#747474;
+	font-size:12px;
+	display:block;
+	font-weight:normal;
+}
+
+.askApps_nav {
+	width:600px;
+	text-align:right;
+	overflow:hidden;
+	padding:16px 15px 0 0;
+}
+
+.askApps_nav ul {
+	width:610px;
+	overflow:hidden;
+	padding:33px 0 0 0;
+}
+
+.askApps_nav ul li {
+	float:left;
+	display:inline;
+	font-size:14px;
+	height:28px;
+	line-height:28px;
+	margin:0 0 0 16px;
+}
+
+.askApps_nav ul .navLine {
+	width:2px;
+	font-size:0;
+	background:url(../images/askApp_sprite.gif) no-repeat 0 5px;
+}
+
+.askApps_nav ul li a {
+	text-align:center;
+	display:inline-block;
+	overflow:hidden;
+	padding:0 20px;
+}
+
+.askApps_nav ul li a:hover {
+	color:#987f60;
+	text-decoration:none;
+}
+
+.askApps_nav ul .active {
+	color:#fff;
+	font-weight:bold;
+	text-align:center;
+	display:inline-block;
+	overflow:hidden;
+	padding:0 16px 0 20px;
+	_height:23px;
+	_padding:8px 16px 0 20px;
+	background:#968979;
+	border-radius:15px;
+	box-shadow:0 1px 1px 0 #6a6055 inset;
+}
+
+.askApps_nav ul .active span {
+	display:inline-block;
+	width:0;
+	height:0;
+	line-height:0;
+	font-size:0;
+	vertical-align:middle;
+	margin:0 0 0 10px;
+	border-left:5px solid #968979;
+	border-right:5px solid #968979;
+	border-top:5px solid #fff;
+}
+
+/*正文*/
+.askApps_main {
+	width:980px;
+	overflow:hidden;
+	margin:0 auto;
+	padding:22px 0 60px 0;
+}
+
+/*左侧*/
+.askApps_sideBar {
+	width:256px;
+	overflow:hidden;
+}
+
+.askApps_sideBar .userCard {
+	padding:0 0 5px 0;
+	background:url(../images/userCardBg.gif) no-repeat 2px bottom;
+}
+
+.askApps_sideBar .userCardBox {
+	border-top:1px solid #f0f0f0;
+	border-left:1px solid #f0f0f0;
+	border-bottom:1px solid #ebebeb;
+}
+
+.askApps_sideBar .userCardBox div {
+	padding:15px 0 0 15px;
+	height:55px;
+	overflow:hidden;
+	border:1px solid #fff;
+	background:#f9f9f9;
+}
+
+.askApps_sideBar .userCardBox dl {
+	margin:0 0 0 50px;
+	padding:4px 0 0 0;
+}
+
+.askApps_sideBar .userCardBox dl dd {
+	color:#747474;
+	padding:5px 0 0 0;
+}
+
+.rank {
+	display:inline-block;
+	width:16px;
+	height:16px;
+	font-style:normal;
+	vertical-align:middle;
+	margin:0 2px 0 1px;
+	background:url(../images/sprite_39.gif) no-repeat -55px -2px;
+}
+
+.level1,.level2,.level3,.level4,.level5,.level6,.level7,.level8,.level9,.level10 {
+	display:inline-block;
+	width:36px;
+	height:16px;
+	text-align:right;
+	font-style:normal;
+	margin:0 0 0 3px;
+	overflow:hidden;
+	vertical-align:bottom;
+	background:url(../images/sprite_39.gif) no-repeat 0 0;
+}
+
+.level2 em,.level3 em,.level4 em,.level5 em,.level6 em,.level7 em,.level8 em,.level9 em,.level10 em {
+	display:inline-block;
+	width:8px;
+	height:7px;
+	margin:5px 3px 0 0;
+	vertical-align:top;
+	background:url(../images/sprite_39.gif) no-repeat 0 -17px;
+}
+
+.level3 em {
+	background:url(../images/sprite_39.gif) no-repeat -7px -17px;
+}
+
+.level4 em {
+	background:url(../images/sprite_39.gif) no-repeat -15px -17px;
+}
+
+.level5 em {
+	background:url(../images/sprite_39.gif) no-repeat -23px -17px;
+}
+
+.level6 em {
+	background:url(../images/sprite_39.gif) no-repeat -31px -17px;
+}
+
+.level7 em {
+	background:url(../images/sprite_39.gif) no-repeat -39px -17px;
+}
+
+.level8 em {
+	background:url(../images/sprite_39.gif) no-repeat -46px -17px;
+}
+
+.level9 em {
+	background:url(../images/sprite_39.gif) no-repeat -54px -17px;
+}
+
+.level10 em {
+	background:url(../images/sprite_39.gif) no-repeat -63px -17px;
+}
+
+.askApps_sideBar .quickNav {
+	padding:12px 0 22px 12px;
+}
+
+.askApps_sideBar .quickNav li {
+	margin:5px 0 0 0;
+}
+
+.askApps_sideBar .quickNav li div {
+	font-size:14px;
+	line-height:40px;	
+	height:40px;
+	padding:0 0 0 10px;
+}
+
+.askApps_sideBar .quickNav li span {
+	color:#fff;
+	font-size:12px;
+	display:inline-block;
+	margin:13px 15px 0 0;
+	_margin:0 15px 0 0;
+	padding:0 5px;
+	height:15px;
+	line-height:15px;
+	background:#987f60;
+	border-radius:2px;
+}
+
+.askApps_sideBar .quickNav .active {
+	border-left:1px solid #e9e9e9;
+	border-top:1px solid #e9e9e9;
+	border-bottom:1px solid #e9e9e9;
+	border-radius:4px 0 0 4px;
+	box-shadow:0 2px 0 0 #f3f3f3;
+}
+
+.askApps_sideBar .quickNav .active div {
+	padding:0 0 0 8px;
+	color:#7e705f;
+	border-left:1px solid #fff;
+	border-top:1px solid #fff;
+	border-bottom:1px solid #fff;
+	background:#f9f9f9;
+	border-radius:4px 0 0 4px;
+}
+
+.recAsk,.myAsk,.myCollect {
+	display:inline-block;
+	width:12px;
+	height:18px;
+	font-size:0;
+	margin:0 8px 0 0;
+	vertical-align:middle;
+	background:url(../images/askApp_sprite.gif) no-repeat 0 -160px;
+}
+
+.myAsk {
+	background:url(../images/askApp_sprite.gif) no-repeat 0 -185px;
+}
+
+.myCollect {
+	background:url(../images/askApp_sprite.gif) no-repeat 0 -211px;
+}
+
+.askApps_sideBar .hotAsk {
+	border-top:1px solid #f0f0f0;
+	margin:0 15px;
+	padding:30px 0 0 0;
+}
+
+.askApps_sideBar .hotAsk h2 {
+	font-size:12px;
+	color:#747474;
+	padding:0 0 10px 0;
+	border-bottom:3px double #e9e9e9;
+}
+
+.askApps_sideBar .hotAsk h2 span {
+	font-weight:normal;
+	margin:0 10px 0 0;
+}
+
+.askApps_sideBar .hotAsk h2 .active {
+	font-weight:bold;
+	color:#987f60;
+}
+
+.askApps_sideBar .hotAsk ul {
+	margin:12px 0 0 0;
+	background:url(../images/askApp_sprite.gif) no-repeat 0 -238px;
+}
+
+.askApps_sideBar .hotAsk ul li {
+	height:25px;
+	line-height:25px;
+	overflow:hidden;
+	padding:0 0 0 20px;
+}
+
+.askApps_sideBar .myBook {
+	margin:12px 0 0 0;
+}
+
+.askApps_sideBar .myBook div {
+	width:100px;
+	display:inline;
+	text-align:center;
+	overflow:hidden;
+	margin:0 6px 10px 6px;
+}
+
+.askApps_sideBar .myBook div a {
+	display:block;
+	padding:0 0 5px 0;
+}
+
+/*右侧*/
+.askApps_mainCon {
+	width:690px;
+	padding:10px 0 0 33px;
+	overflow:hidden;
+	border-left:1px solid #f0f0f0;
+}

@@ -1,0 +1,65 @@
+body {
+	font-size:12px;
+	font-family:"宋体";
+	text-align:center;
+	line-height:20px;
+	padding:0;
+	margin:0;
+}
+
+div,h1,h2,h3,h4,h5,h6,ol,ul,li,dl,dt,dd,form,input,select,textarea {
+	text-align:left;
+	padding:0;
+	margin:0;
+}
+
+ol,ul,li {
+	list-style:none;
+}
+
+p {
+	padding:0;
+	margin:0;
+}
+
+img {
+	vertical-align:middle;
+	border:none;
+}
+
+a:link,a:visited {
+	color:#333;
+	text-decoration:none;
+}
+
+a:hover {
+	color:#000;
+	text-decoration:underline;
+}
+
+a.hui:link,a.hui:visited {
+	color:#bababa;
+	text-decoration:none;
+}
+
+a.hui:hover {
+	color:#bababa;
+	text-decoration:underline;
+}
+
+.textColor1 {
+	color:#394551;
+}
+
+.float_l {
+	float:left;
+}
+
+.float_r {
+	float:right;
+}
+
+.clear_float {
+	clear:both;
+}
+

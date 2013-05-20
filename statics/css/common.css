@@ -1,0 +1,430 @@
+@charset "gb2312";
+.black14{
+	font-size: 14px; 
+	font-style: normal; 
+	line-height: 160%; 
+	color:#000; 
+	text-decoration: none
+}
+a.black14:hover {  
+    font-size: 14px; 
+	font-style: normal; 
+	line-height: 160%; 
+	color: #333333; 
+	text-decoration: none;
+}
+.blue12{
+	font-size: 12px;
+	font-style: normal;
+	line-height: 160%;
+	color:#0D47A8;
+	text-decoration: none;
+	font-weight: normal;
+}
+.blue12 a{
+	font-size: 12px;
+	font-style: normal;
+	line-height: 160%;
+	color:#0D47A8;
+	text-decoration: none;
+	font-weight: normal;
+}
+.blue12 a:hover{
+	font-size: 12px;
+	font-style: normal;
+	line-height: 160%;
+	color:#0D47A8;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+.blue14{
+	font-size: 14px;
+	color: #0D47A8;
+	text-decoration: none;
+	margin: 0px;
+	padding: 0px;
+
+}
+.blue14 a{
+	font-size: 14px;
+	color: #0D47A8;
+	text-decoration: none;
+	margin: 0px;
+	padding: 0px;
+
+}
+.blue14 a:hover{
+	font-size: 14px;
+	color: #0D47A8;
+	text-decoration: none;
+	margin: 0px;
+	padding: 0px;
+
+}
+.whrite12{
+	font-size: 12px;
+	font-style: normal;
+	line-height: 120%;
+	color:#FFF;
+	text-decoration: none;
+	letter-spacing: 2px;
+}
+.whrite12 a {  
+    font-size: 12px; 
+	font-style: normal; 
+	line-height: 120%; 
+	color: #FFF; 
+	text-decoration: none;
+	letter-spacing: 2px;
+}
+.whrite12 a:hover {  
+    font-size: 12px; 
+	font-style: normal; 
+	line-height: 120%; 
+	color: #FFF; 
+	text-decoration: none;
+	letter-spacing: 2px;
+}
+.red{
+	font-size: 12px;
+	color:#D3090A;
+	text-decoration: none;
+	letter-spacing: 1px;
+}
+.red2{
+	font-size: 14px;
+	color:#EE5509;
+	text-decoration: none;
+	letter-spacing: 1px;
+	font-weight: bold;
+}
+.red2 a {
+	font-size: 14px;
+	color:#EE5509;
+	text-decoration: none;
+	letter-spacing: 1px;
+	font-weight: bold;
+}
+.red2 a:hover{
+	font-size: 14px;
+	color:EE5509;
+	text-decoration: none;
+	letter-spacing: 1px;
+	font-weight: bold;
+}
+.red3 {
+	font-family: "黑体";
+	font-size: 25px;
+	color: #D84619;
+	text-decoration: none;
+	line-height: 110%;
+	font-weight: bolder;
+}
+.red3 a:hover  {
+	font-family: "黑体";
+
+	font-size: 25.px;
+	color: #D84619;
+	text-decoration: none;
+	line-height: 110%;
+	font-weight: bolder;
+	font-size: 25px;
+}
+
+.red4 {
+	font-family: "黑体";
+	font-size: 16px;
+	color: #D84619;
+	text-decoration: none;
+	line-height: 140%;
+	font-weight: bolder;
+	margin: 0px;
+}
+.red4 a:hover  {
+font-family: "黑体";
+	font-size: 16px;
+	color: #D84619;
+	text-decoration: none;
+	line-height: 140%;
+	font-weight: bolder;
+}
+.gray12 {  
+    font-size: 12px; 
+	font-style: normal; 
+	line-height: 160%; 
+	color: #7A7A7A; 
+	text-decoration: none
+}
+.input {
+	color: #000000;
+	height: 17px;
+	border: 1px solid #D3D1D1;
+	clip:rect(   );
+	width: 80px;
+	margin: 0px;
+	background-color: #FFFFFF;
+	padding: 0px;
+}
+.textarea01 {
+	vertical-align: top;
+	margin: 0px;
+	height: 100px;
+	width: 300px;
+}
+
+.input_m {
+	color: #000000;
+	height: 15px;
+	clip:rect(0px,auto,auto,auto);
+	width: 300px;
+	margin: 0px;
+	padding: 0px;
+	vertical-align: top;
+}
+.input_rl {
+	background-color: #EAEAEA;
+	height: 18px;
+	width: 30px;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	text-align: center;
+	font-family: "宋体";
+}
+
+.block{
+    width:960px; height:auto;
+}
+.f_l{
+    float:left;
+	}
+.f_r{
+	float:right;
+	margin: 0px;
+}
+.f_r2 {
+	padding-top: 15px;
+	float: right;
+}
+
+.f_c {
+	width: 700px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 170px;
+}
+
+.tl{ text-align:left;}
+.tc{ text-align:center;}
+.tr{ text-align:right;}
+.dis{display:block;}
+.inline{display:inline;}
+.none{display:none;}
+.dashed{background:url(images/lineBg.gif) repeat-x left top; color:#3f3f3f;  padding:2px 0 3px 12px;}
+
+.clearfix:after{
+content:".";
+display:block; height:0; clear:both;
+visibility:hidden;
+}
+
+
+/* 中间文章列表 */
+.list{
+	width:634px;
+	height:auto; 
+	float:left; 
+	padding-top:4px;
+}
+.list_01{
+	border-width:1px 1px 1px 1px;
+	border:1px solid #aac7d0;
+	width:312px;
+}
+.list_01 h3{
+	font-size:12px;
+	line-height:35px;
+	margin:0; 
+	font-weight:bold; 
+	padding-left:40px; 
+	text-align:left; 
+	background:url(../images/m_05.gif) no-repeat;
+}
+.list_01 img{
+	margin-top:8px;
+	margin-right:5px;
+	float:right;
+	border:0;
+}
+
+/* 图片广告通用样式 begin */
+/* 学校新闻下面的广告区 */
+.banner_middle{
+	width:634px;
+	margin:0;
+	padding-top:4px;
+	float:left;
+}
+.banner_middle li {
+	float:left;
+	padding:1px;
+}
+
+.banner_middle img
+{
+	border:1px solid #E4E1D3;
+}
+
+
+/* 图片广告通用样式 end  */
+/* 图片列表 */
+
+.pic_list { width:100%; overflow:hidden;}
+
+.pic_list li { margin:2px 6px; display:inline; float:left; text-align:left; background-image:none; padding:0;}
+
+.pic_list li img,.pic_txt_list li img{ padding:1px;	border:1px solid #ccc;}
+
+.pic_list li a{ font-size:12px;white-space: nowrap }
+
+
+
+
+/* 列表时间处理 */
+
+
+
+
+/****************************** 表格样式 begin *******************************/
+
+/*************************** 不规则表格 begin *****************************/
+caption {
+	padding: 0;
+	width: 100%;
+	font: 12px; 
+    text-align: left; 
+	background-color: #CCC;
+	line-height: 30px;
+	text-indent: 2em;
+}
+/*table,td,th通用的部分*/
+
+/*************************** 不规则表格 end *****************************/
+
+/*************************** 规则表格 begin ***************************/
+
+/**************** 待续 ***********/
+
+/*************************** 规则表格 end *****************************/
+
+
+/****************************** 表格样式 begin *******************************/
+
+/****************************** 按钮样式 begin *******************************/
+.btn {
+	border: #a6a6a6 1px solid;
+	padding: 2px;
+	font-size: 12px;
+	height:22px;
+	width:60px;
+	cursor: hand;
+	color: black;
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#cecfde);	
+}
+.btn2 {
+	padding: 2px 4px 0 4px;
+	font-size:12px;
+	height:22px;
+	width:60px;
+	background-color:#ccdee8;
+	border: #a6a6a6 1px solid;
+}
+.smallInput{
+	border: #a6a6a6 1px solid;;
+	font-size: 12px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	color: #000000;
+	clip:rect(   )
+}
+input.buttonface{
+	background: #ffcc00;
+	border:1 solid #ff6633;
+	color: #000000;
+	font-size:12px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	height: 20px;
+	line-height: normal
+}
+/*input控件边框*/
+.inputBorder{
+	border:1px solid #ccc; 
+	background:#fff;
+}
+/****************************** 文本框样式 end *******************************/
+
+/****************************** 分页样式 begin *******************************/
+/*注释：分页样式可以积累多种 */
+
+/****************************** 分页样式 end *******************************/
+
+/************************ 页面留白:取代<br>标记 begin **********************/
+.blank{
+	  height:8px; 
+	  line-height:8px; 
+	  clear:both; 
+	  visibility:hidden;
+}
+.blank5{
+	height:5px; 
+	line-height:5px;
+	/* _margin:-3px 0;*/ 
+	clear:both; 
+	visibility:hidden;
+}
+td {
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-right-color: #CECECE;
+	border-bottom-color: #CECECE;
+	padding-top: 7px;
+	padding-right: 3px;
+	padding-bottom: 7px;
+	padding-left: 3px;
+}
+.tabel_blue {
+	border-top-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-left-style: solid;
+	border-top-color: #CECECE;
+	border-left-color: #CECECE;
+	font-size: 12px;
+}
+
+.tr_blue {
+	background-color: #E9EEF1;
+	padding: 1px;
+	text-align: center;
+}
+/************************* 页面留白:取代<br>标记 end **********************/
+
+/******************* 公共样式 ********************/
+
+.tu_line {
+	border: 1px solid #B3B3B3;
+	background-color: #FFFFFF;
+	padding: 3px;
+}
+.gj{
+	padding-top: 3px;
+	padding-right: 5px;
+}

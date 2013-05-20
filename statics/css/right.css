@@ -1,0 +1,170 @@
+body {
+	font-size: 12px;
+	color: #262626;
+	margin: 0px;
+	padding: 0px;
+}
+td {
+	font-size: 12px;
+	color: #000;
+}
+.wright12 {
+	font-size: 12px;
+	color: #FFFFFF;
+}
+.input_m {
+	height: 18px;
+	width: 130px;
+	border: 1px solid #7F9DB9;
+}
+.red12{
+	font-size: 12px;
+	color: #CC0000;
+	text-decoration: none;
+}
+.red12 a{
+	font-size: 12px;
+	color: #CC0000;
+	text-decoration: none;
+}
+.red12 a:hover{
+	font-size: 12px;
+	color: #CC0000;
+	text-decoration: none;
+}
+.blue12 {
+	font-size: 12px;
+	font-weight: bold;
+	color: #1DBAD2;
+	text-decoration: none;
+}
+.blue12 a{
+	font-size: 12px;
+	font-weight: bold;
+	color: #1DBAD2;
+	text-decoration: none;
+}
+.blue12 a:hover {
+	font-size: 12px;
+	font-weight: bold;
+	color: #1DBAD2;
+	text-decoration: none;
+}
+.green12 {
+	font-size: 12px;
+	font-weight: bold;
+	color: #24912E;
+	text-decoration: none;
+}
+.green12 a {
+	font-size: 12px;
+	font-weight: bold;
+	color: #24912E;
+	text-decoration: none;
+}
+.green12 a:hover {
+	font-size: 12px;
+	font-weight: bold;
+	color: #24912E;
+	text-decoration: none;
+}
+.purple12 {
+	font-size: 12px;
+	color: #B52AEF;
+	text-decoration: none;
+}
+.purple12 a {
+	font-size: 12px;
+	color: #B52AEF;
+	text-decoration: none;
+}
+.purple12 a:hover {
+	font-size: 12px;
+	color: #B52AEF;
+	text-decoration: none;
+}
+.white12 {
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.white12 a{
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.white12 a:hover {
+	font-size: 12px;
+	font-weight: bold;
+	color: #df5502;
+	text-decoration: none;
+}
+.tr1 {
+	background-color: #E8E6FF;
+	font-size: 12px;
+	color: #7430C7;
+	font-weight: bold;
+	line-height: 130%;
+}
+
+.tr1 td{
+	background-color: #E8E6FF;
+	font-size: 12px;
+	color: #7430C7;
+	font-weight: bold;
+	line-height: 130%;
+}
+
+.tr2 {
+	background-color: #E8F1FF;
+}
+.tr2 td {
+	padding-top: 7px;
+	padding-right: 10px;
+	padding-bottom: 4px;
+	padding-left: 10px;
+}
+.tr3 {
+	background-color: #FFFFFF;
+}
+.tr3 td {
+	padding-top: 7px;
+	padding-right: 10px;
+	padding-bottom: 4px;
+	padding-left: 10px;
+}
+.blue14 {
+	font-size: 20px;
+	color: #1DBAD2;
+	text-decoration: none;
+	font-weight: bolder;
+}
+.blue14 a {
+	font-size: 20px;
+	color: #1DBAD2;
+	text-decoration: none;
+	font-weight: bolder;
+}
+.blue14 a:hover {
+	font-size: 20px;
+	color: #1DBAD2;
+	text-decoration: none;
+	font-weight: bolder;
+}
+.bj2 {
+	background-image: url(../images/yj01_bj2.jpg);
+	background-repeat: repeat-x;
+	background-position: right bottom;
+}
+.yd-button{
+    width: 85px;
+    height:22px;
+    line-height: 22px;
+    background: url(../images/yj06.gif) left center repeat-x;
+    display: block;
+    color: #FFF;
+    text-align: center;
+
+}

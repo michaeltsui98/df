@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+        <title>湖北省教辅材料选用辅助管理平台</title>
+        <link href="{BASE_PATH}/statics/css/reset.css" rel="stylesheet" type="text/css" />
+        <link href="{BASE_PATH}/statics/css/system.css" rel="stylesheet" type="text/css" />
+        <link href="{BASE_PATH}/statics/css/dialog.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{BASE_PATH}/statics/css/powerFloat.css" type="text/css" />
+        <script language="javascript" type="text/javascript" src="{BASE_PATH}/statics/js/jquery.min.js"></script>
+        <script language="javascript" type="text/javascript" src="{BASE_PATH}/statics/js/styleswitch.js"></script>
+        <script language="javascript" type="text/javascript" src="{BASE_PATH}/statics/js/dialog.js"></script>
+        <script language="javascript" type="text/javascript" src="{BASE_PATH}/statics/js/jquery.sGallery.js"></script>
+        <script type="text/javascript" src="{BASE_PATH}/statics/js/jquery-powerFloat.js"></script>
+    </head>
+    <body scroll="no">
+        <div id="dvLockScreen" class="ScreenLock" style="display:none">
+            <div id="dvLockScreenWin" class="inputpwd">
+                <h5><b class="ico ico-info"></b><span id="lock_tips">锁屏状态，请输入密码解锁</span></h5>
+                <div class="input">
+                    <label class="lb">密码：</label><input type="password" id="lock_password" class="input-text" size="24" />
+                    <input type="submit" class="submit" value="&nbsp;" name="dosubmit" onclick="check_screenlock();return false;" />
+                </div>
+            </div>
+        </div>
+        <div class="header">
+            <div class="logo lf" >
+                <span style="color: #ffffff;" id="changeYear">切换期号</span><br/>
+                <span style="color: #ffffff;"><?php echo $this->latestMenuTitle; ?></span>
+            </div>
+            <div class="rt">
+                <div class="tab_style white cut_line text-r">
+                    <a href="javascript:;" onclick="lock_screen()"><img src="{BASE_PATH}/statics/images/icon/lockscreen.png"> 锁屏</a><span>|</span><a target='_blank' href="http://jcjf.e21.cn/index.php/user/article/?html=http://cms.e21.cn/html/2012/09-17/1347864216119442816.htm">帮助？</a>
+                </div>
+                <div class="style_but"></div>
+            </div>
+            <div class="col-auto" style="overflow: visible">
+                <div class="log white cut_line">您好！<?php echo $_SESSION['user']['real_name']; ?><span>|</span>
+                    <a href="/index.php/user/logout">[退出]</a><span>|</span>
+                    <a href="/index.php/user/index" id="site_homepage">首页</a>
+                </div>
+                <ul class="nav white" id="top_menu">
+                    <?php
+                    foreach ($this->menu as $_value) {
+                        if ($_value['id'] == 8) {
+                            echo '<li id="_M' . $_value['id'] . '" class="on top_menu"><a href="javascript:_M(' . $_value['id'] . ', \'/index.php/index/leftMenu/menuid/\')" hidefocus="true" style="outline:none;">' . $_value['name'] . '</a></li>';
+                        } else {
+                            echo '<li id="_M' . $_value['id'] . '" class="top_menu"><a href="javascript:_M(' . $_value['id'] . ', \'/index.php/index/leftMenu/menuid/\')"  hidefocus="true" style="outline:none;">' . $_value['name'] . '</a></li>';
+                        }
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+        <div id="content">
+            <div class="col-left left_menu">
+                <div id="leftMain"></div>
+                <a title="展开与关闭" class="open" hidefocus="hidefocus" style="outline-style: none; outline-width: medium; height: 640px;" id="openClose" href="javascript:;"><span class="hidden">展开</span></a>
+            </div>
+            <div class="col-1 lf cat-menu" id="display_center_id" style="display:none" height="100%">
+                <div class="content">
+                    <iframe name="center_frame" id="center_frame" src="" frameborder="false" scrolling="auto" style="border:none" width="100%" height="auto" allowtransparency="true"></iframe>
+                </div>
+            </div>
+            <div class="col-auto mr8">
+                <div class="crumbs">
+                    <div class="shortcut cu-span">
+                    </div>
+                    当前位置：<span id="current_pos"></span></div>
+                <div class="col-1">
+                    <div class="content" style="position:relative; overflow:hidden">
+                        <iframe name="right" id="rightMain" src="/index.php/index/secretary" frameborder="false" scrolling="auto" style="overflow-x:hidden;border:none; margin-bottom:30px" width="100%" height="auto" allowtransparency="true"></iframe>
+                        <div class="fav-nav">
+                            <div id="panellist"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            //clientHeight-0; 空白值 iframe自适应高度
+            function windowW(){
+                if($(window).width()<980){
+                    $('.header').css('width',980+'px');
+                    $('#content').css('width',980+'px');
+                    $('body').attr('scroll','');
+                    $('body').css('overflow','');
+                }
+            }
+            windowW();
+            $(window).resize(function(){
+                if($(window).width()<980){
+                    windowW();
+                }else{
+                    $('.header').css('width','auto');
+                    $('#content').css('width','auto');
+                    $('body').attr('scroll','no');
+                    $('body').css('overflow','hidden');
+                }
+            });
+            window.onresize = function(){
+                var heights = document.documentElement.clientHeight-150;document.getElementById('rightMain').height = heights;
+                var openClose = $("#rightMain").height()+39;
+                $('#center_frame').height(openClose+9);
+                $("#openClose").height(openClose+30);
+            }
+            window.onresize();
+            //站点下拉菜单
+            $(function(){
+                //默认载入左侧菜单
+                $("#leftMain").load("/index.php/index/leftMenu/menuid/8");
+            });
+
+            //左侧开关
+            $("#openClose").click(function(){
+                if($(this).data('clicknum')==1) {
+                    $("html").removeClass("on");
+                    $(".left_menu").removeClass("left_menu_on");
+                    $(this).removeClass("close");
+                    $(this).data('clicknum', 0);
+                } else {
+                    $(".left_menu").addClass("left_menu_on");
+                    $(this).addClass("close");
+                    $("html").addClass("on");
+                    $(this).data('clicknum', 1);
+                }
+                return false;
+            });
+            function _M(menuid,targetUrl) {
+                $("#leftMain").load(targetUrl + menuid);
+
+                //$("#rightMain").attr('src', targetUrl);
+                $('.top_menu').removeClass("on");
+                $('#_M'+menuid).addClass("on");
+                $.get("/index.php/index/currentPos/menuid/"+menuid, function(data){
+                    $("#current_pos").html(data);
+                });
+                //当点击顶部菜单后，隐藏中间的框架
+                $('#display_center_id').css('display','none');
+                //显示左侧菜单，当点击顶部时，展开左侧
+                $(".left_menu").removeClass("left_menu_on");
+                $("#openClose").removeClass("close");
+                $("html").removeClass("on");
+                //	$("#openClose").data('clicknum', 0);
+                //	$("#current_pos").data('clicknum', 1);
+            }
+            function _MP(menuid,targetUrl) {
+                $("#rightMain").attr('src', targetUrl);
+                $('.sub_menu').removeClass("on fb blue");
+                $('#_MP'+menuid).addClass("on fb blue");
+                $.get("/index.php/index/currentPos/menuid/"+menuid, function(data){
+                    $("#current_pos").html(data+'<span id="current_pos_attr"></span>');
+                });
+                $("#current_pos").data('clicknum', 1);
+            }
+            $(".switchs").each(function(i){
+                var ul = $(this).parent().next();
+                $(this).click(
+                function(){
+                    if(ul.is(':visible')){
+                        ul.hide();
+                        $(this).removeClass('on');
+                    }else{
+                        ul.show();
+                        $(this).addClass('on');
+                    }
+                })
+            });
+            function lock_screen() {
+                $.get("/index.php/index/lockScreen");
+                $('#dvLockScreen').css('display','');
+            }
+            function check_screenlock() {
+                var lock_password = $('#lock_password').val();
+                if(lock_password=='') {
+                    $('#lock_tips').html('<font color="red">密码不能为空。</font>');
+                    return false;
+                }
+                $.get("/index.php/user/loginScreenLock", { lock_password: lock_password},function(data){
+                    if(data==1) {
+                        $('#dvLockScreen').css('display','none');
+                        $('#lock_password').val('');
+                        $('#lock_tips').html('锁屏状态，请输入密码解锁');
+                    } else if(data==3) {
+                        $('#lock_tips').html('<font color="red">密码重试次数太多</font>');
+                        window.location.href='/index.php/user/logout';
+                    } else {
+                        strings = data.split('|');
+                        $('#lock_tips').html('<font color="red">密码错误，您还有'+strings[1]+'次尝试机会！</font>');
+                    }
+                });
+            }
+        </script>
+
+        <script type="text/javascript">
+
+
+            $("#changeYear").powerFloat({
+                width: "90",
+                target: [
+                <?php
+                    foreach($this->fiveMenus as $key => $val)
+                    {
+                        echo "{href:'/index.php/index/main/latestMenuId/".$val['menu_id']."',text:'".$val['menu_name']."'},";
+                    }
+                    //echo "{href:'/index.php/index/main',text:'测试链接'},";
+                ?>
+                ],
+                targetMode: "list"
+            });
+
+        </script>
+
+    </body>
+</html>

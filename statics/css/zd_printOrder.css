@@ -1,0 +1,175 @@
+#wrapper {
+	width:992px;
+	margin:0 auto;
+	padding:15px 0 0 0;
+}
+
+#header {
+	padding:18px 0 0 0;
+}
+
+.logo {
+	margin:0 0 8px 3px;
+}
+
+.login {
+	height:36px;
+	line-height:36px;
+	overflow:hidden;
+	padding:0 10px 0 0;
+	border-bottom:2px solid #719ecc;
+	background:#e2eaf5;
+}
+
+.login .JFtitle {
+	vertical-align:text-bottom;
+	padding:8px 0 0 0;
+}
+
+#pOrderBox {
+	padding:10px 0;
+	margin:0 0 15px 0;
+}
+
+.printOrderT {
+	font-size:30px;
+	font-family:"微软雅黑";
+	font-weight:100;
+	text-align:center;
+	padding:21px 0 3px 0;
+	border:1px solid #aac6e0;
+	background:#e2eaf5;
+}
+
+.printOrderT span {
+	display:block;
+	color:#595757;
+	font-family:"宋体";
+	font-size:12px;
+	font-weight:normal;
+	text-align:right;
+	padding:5px 10px 0 0;
+}
+
+.printBtn {
+	text-align:right;
+	padding:5px 10px 5px 0;
+}
+
+.printBtn a:link,.printBtn a:visited {
+	text-align:center;
+	display:inline-block;
+	width:66px;
+	height:22px;
+	line-height:22px;
+	color:#fff;
+	text-decoration:none;
+	background:url(../images/JF_loginBtn.jpg) no-repeat left top;
+}
+
+.printBtn a:hover {
+	text-align:center;
+	display:inline-block;
+	width:66px;
+	height:22px;
+	line-height:22px;
+	color:#fff;
+	text-decoration:underline;
+	background:url(../images/JF_loginBtn.jpg) no-repeat left top;
+}
+
+.printOrder {
+	padding:7px 0 12px 0;
+	border:1px solid #c0c0c1;
+	background:#ededed;
+}
+
+.printOrder h4 {
+	font-size:14px;
+	padding:0 0 10px 15px;
+}
+
+.printDis {
+	width:976px;
+	overflow:hidden;
+	margin:0 auto;
+	background:#fff;
+}
+
+.printDis h5 {
+	font-family:"宋体";
+	font-size:12px;
+	height:28px;
+	line-height:28px;
+	padding:0 0 0 35px;
+}
+
+.orderInfo {
+	padding:0 0 3px 0;
+	border-bottom:1px solid #e3e3e4;
+}
+
+.orderInfo td {
+	padding:1px 1px 1px 8px;
+}
+
+.listTab {
+	border:1px solid #dedede;
+}
+
+.listTabW1,.listTabW2,.listTabW3,.listTabW4,.listTabW5 {
+	overflow:hidden;
+}
+
+.listTabLine {
+	color: #020000;
+	border-bottom:1px solid #e8e8e8;
+}
+
+.listTabLine1 {
+	border-left:1px solid #f2f2f2;
+}
+
+.listTabW1 {
+	width:224px;
+	padding:0 20px;
+}
+
+.listTabW2 {
+	width:330px;
+	padding:0 60px;
+}
+
+.listTabW3 {
+	width:127px;
+}
+
+.listTabW4 {
+	width:115px;
+}
+
+.listTabW5 {
+	width:93px;
+}
+
+.jz {
+	font-size:14px;
+	width:188px;
+	overflow:hidden;
+	padding:25px 0 15px 25px;
+}
+
+.jz div {
+	width:115px;
+	height:20px;
+	line-height:20px;
+	overflow:hidden;
+	border-bottom:1px solid #000;
+}
+
+#printOrderFooter {
+	color:#595757;
+	font-size:12px;
+	text-align:center;
+	padding:0 0 40px 0;
+}
