@@ -4,7 +4,14 @@
 class Controllers_Admin_Base extends Cola_Controller
 {
     function __construct(){
-       // $this->checkLogin();
+       
+       isset($_SESSION) || session_start();
+       $data['roleid']  = 1;
+       $data['uid'] = '123';
+       $data['real_name'] = '张老师';
+       $_SESSION['user'] = $data;
+       
+       $this->checkLogin();
     }
     
     /**
@@ -14,7 +21,7 @@ class Controllers_Admin_Base extends Cola_Controller
     private function checkLogin()
     {
         if (!isset($_SESSION['user'])) {
-            $this->response->alert('您还没有登录或登录有效时间已经过期，请重新登录系统！', '/index.php/Admin_Login/index');
+            $this->response->alert('您还没有登录或登录有效时间已经过期，请重新登录系统！', BASE_PATH.'/index.php/Admin_Login/index');
             exit;
         }
         return true;
@@ -34,18 +41,28 @@ class Controllers_Admin_Base extends Cola_Controller
         $fundoc = trim(substr($fundoc, 11,-2));
         preg_match('/@var[\s]*([^ ]+)\n/i', $clsdoc,$mat);
         $data['controller'] = $cola['controller'];
+        $data['c']  = substr($cola['controller'], 12);
         $data['action']  = $cola['action'];
-        $data['clsdoc'] = $mat[1];
-        $data['fundoc'] = $fundoc;
-    
+        $data['a'] = substr($cola['action'], 0,-6);
+        $data['clsdoc'] = trim($mat[1]);
+        $data['fundoc'] = trim($fundoc);
         return $data;
     }
     /**
      * 生成系统操作日志
      * @param string $msg
      */
-    function sysLog($msg){
-        
+    function sysLog($msg=NULL){
+        $info = $this->getComment();
+        $prefix = $info['clsdoc'].'/'.$info['fundoc'].'/';
+        $data['log_msg'] = $prefix .$msg;
+        $data['module_controller']  = $info['c'];
+        $data['module_action']  = $info['a'];
+        $data['uid'] = $_SESSION['user']['uid'];
+        $data['user_name']  =  $_SESSION['user']['real_name'];
+        $data['log_time'] = $_SERVER['REQUEST_TIME'];
+        $model = new Models_Admin_Log;
+        $model->add($data);
     }
 }
 

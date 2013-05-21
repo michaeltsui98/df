@@ -65,9 +65,9 @@ class Cola_Tpl {
 	public static function parse_rule($template, $tpl = null) {
 		global $_K;
 		 
-		$template = preg_replace ( "/\<\!\-\-\{include\s+([a-z0-9_\/]+)\}\-\-\>/ie", "Cola_Tpl::readtemplate('\\1')", $template );
+		$template = preg_replace ( "/{include\s+([a-z0-9_\/]+)\}/ie", "Cola_Tpl::readtemplate('\\1')", $template );
 		//处理子页面中的代码
-		$template = preg_replace ( "/\<\!\-\-\{include\s+([a-z0-9_\/]+)\}\-\-\>/ie", "Cola_Tpl::readtemplate('\\1')", $template );
+		$template = preg_replace ( "/{include\s+([a-z0-9_\/]+)\}/ie", "Cola_Tpl::readtemplate('\\1')", $template );
 		
 		//标签调用
 		//$template = preg_replace ( '/\{tag\((.+?)\)\}/ie', "Cola_Tpl::readtag(\"'\\1'\")", $template );

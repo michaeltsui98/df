@@ -25,36 +25,6 @@ class Controllers_Admin_Index extends Controllers_Admin_Base
          
         $this->view->menu = $this->menuAction();
         $menuOrder = Models_Admin_Menu::init();
-        
-       // var_dump($this->view->menu);
-        $latestMenuId = $this->request->param('latestMenuId','');
-        
-        if($latestMenuId =='')//这个就是首次进入的
-        {
-            //如果没有，那么最新的一个会被传入SESSION
-            $singleTopMenu = $menuOrder->getLatestMenuInfo();
-            //var_dump($singleTopMenu);
-            //如果没有有效的，就是0
-    
-            $_SESSION['user']['latestMenuId'] = isset($singleTopMenu[0]['menu_id']) ? $singleTopMenu[0]['menu_id'] : 0 ;
-            $_SESSION['user']['latestMenuTitle'] = isset($singleTopMenu[0]['menu_name']) ? $singleTopMenu[0]['menu_name'] : "没有有效的征订期号";
-            $_SESSION['user']['latestMenuStartTime'] = isset($singleTopMenu[0]['menu_name']) ? $singleTopMenu[0]['menu_name'] : "没有有效的征订期号";
-    
-        }
-        else
-        {
-    
-            $latestMenu = $menuOrder->getSingleMenu($latestMenuId);
-            $_SESSION['user']['latestMenuId'] = isset($latestMenu[0]['menu_id']) ? $latestMenu[0]['menu_id'] : 0 ;
-            $_SESSION['user']['latestMenuTitle'] = isset($latestMenu[0]['menu_name']) ? $latestMenu[0]['menu_name'] : "没有有效的征订期号";
-    
-        }
-        $this->view->latestMenuTitle = $_SESSION['user']['latestMenuTitle'];
-        //获得最新的5个期号和名称
-        $fiveMenus = $menuOrder->getTop5MenuInfo();
-        // var_dump($fiveMenus);
-        $this->view->fiveMenus = $fiveMenus;
-    
     
         $this->display('admin/main');
     }

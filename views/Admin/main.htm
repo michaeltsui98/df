@@ -26,8 +26,7 @@
         </div>
         <div class="header">
             <div class="logo lf" >
-                <span style="color: #ffffff;" id="changeYear">切换期号</span><br/>
-                <span style="color: #ffffff;">{$this->latestMenuTitle}</span>
+                 <span style="margin-top:30;color:#fff">多多学堂后台管理</span>
             </div>
             <div class="rt">
                 <div class="tab_style white cut_line text-r">
@@ -192,20 +191,7 @@
             }
         </script>
 
-        <script type="text/javascript">
-
-
-            $("#changeYear").powerFloat({
-                width: "90",
-                target: [
-                {loop $fiveMenus   $key   $val}
-				  {href:"{BASE_PATH}/index.php/Admin_Index/main/latestMenuId/{$val['menu_id']}",text:"{$val['menu_name']}"},
-				{/loop}
-                ],
-                targetMode: "list"
-            });
-
-        </script>
+        
 
     </body>
 </html>
