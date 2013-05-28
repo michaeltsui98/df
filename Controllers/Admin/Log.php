@@ -21,7 +21,7 @@ class Controllers_Admin_Log extends Controllers_Admin_Base
     {
        
         $page = $this->getVar('page',1);
-        $limit = 2;
+        $limit = 10;
         $this->view->fid =  $fid = $this->getVar('fid');
         $this->view->cond = $cond = $this->getVar('cond');
         $this->view->val= $val = $this->getVar('val');

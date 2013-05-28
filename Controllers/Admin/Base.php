@@ -7,7 +7,7 @@ class Controllers_Admin_Base extends Cola_Controller
     static $cond_arr = array('=','>','<','like');
     function __construct(){
        
-       isset($_SESSION) || session_start();
+       isset($_SESSION) OR session_start();
        $data['roleid']  = 1;
        $data['uid'] = '123';
        $data['real_name'] = '张老师';
@@ -40,14 +40,15 @@ class Controllers_Admin_Base extends Cola_Controller
         $fundoc = $rc->getMethod($cola['action'])->getDocComment();
         $clsdoc = $rc->getDocComment();
     
-        $fundoc = trim(substr($fundoc, 11,-2));
+        //$fundoc = trim(substr($fundoc, 11,-2));
+        preg_match('/\*[\s]+?([^ ]+)\n/i', $fundoc,$fat);
         preg_match('/@var[\s]*([^ ]+)\n/i', $clsdoc,$mat);
         $data['controller'] = $cola['controller'];
         $data['c']  = substr($cola['controller'], 12);
         $data['action']  = $cola['action'];
         $data['a'] = substr($cola['action'], 0,-6);
         $data['clsdoc'] = trim($mat[1]);
-        $data['fundoc'] = trim($fundoc);
+        $data['fundoc'] = trim($fat[1]);
         return $data;
     }
     /**
@@ -64,7 +65,7 @@ class Controllers_Admin_Base extends Cola_Controller
         $data['user_name']  =  $_SESSION['user']['real_name'];
         $data['log_time'] = $_SERVER['REQUEST_TIME'];
         $model = new Models_Admin_Log;
-        $model->add($data);
+        $model->insert($data);
     }
 }
 
