@@ -419,5 +419,32 @@ class Cola_Model
                 throw new Exception('Undefined property: ' . get_class($this) . '::' . $key);
         }
     }
+    /**
+     * 获取sql 的分页代码 limi xx ,xxx
+     * @param int $count
+     * @param int $limit
+     * @param int $page
+     * @return string
+     */
+    function getLimit($count, $limit, $page){
+        
+        $count = intval($count);
+        $limit = intval($limit);
+         
+        if ($count > 0 && $limit > 0) {
+            $total_pages = ceil ( $count / $limit );
+        } else {
+            $total_pages = 0;
+        }
+        if ($page > $total_pages) {
+            $page = $total_pages;
+        }
+    
+        $start = $limit * $page - $limit;
+        if ($start < 0){
+            $start = 0;
+        }
+        return " LIMIT " . $start . " ," . $limit;
+    }
 
 }

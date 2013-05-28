@@ -3,6 +3,8 @@
 
 class Controllers_Admin_Base extends Cola_Controller
 {
+    
+    static $cond_arr = array('=','>','<','like');
     function __construct(){
        
        isset($_SESSION) || session_start();
