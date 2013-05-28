@@ -1,0 +1,78 @@
+{include admin/header}
+         <div class="content-menu ib-a blue line-x">
+                <a href='{BASE_PATH}/index.php/Admin_Video/add'><em>添加视频</em></a><span> 
+            </div>
+            <div class="subnav">
+            <form name="myform" id="myform" action="{BASE_PATH}/index.php/Admin_Video" method="get">
+                <div class="content-menu ib-a blue line-x">
+                     
+                    <span style="color: red;">搜索条件</span>
+                    <label>字段:</label>
+                    <select name="fid">
+                    	{loop $fid_arr  $k $v}
+						  <option value="{$k}" {if $k==$fid} selected {/if}>{$v}</option>
+						{/loop}
+                    </select>
+					<label>条件</label>
+					<select name="cond">
+						{loop $cond_arr  $v}
+						  <option value="{$v}" {if $v==$cond} selected {/if}>{$v}</option>
+						{/loop}
+                    </select>
+                    <label>值:</label>
+                    <input type="text" name="val" value="{$val}" />
+                    <input id="dosubmit" class="button" type="submit" value="提交" />
+                </div>
+            </form>
+        </div>
+        <div class="pad-lr-10">
+            <div class="table-list">
+
+                <table width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th width="80">ID</th>
+                            <th width="240">视频名称</th>
+                            <th>发布人</th>
+                            <th>时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {loop $data $v}
+                                <tr>
+                                    <td align='center'>{$v['id']}</td>
+                                    <td align='center'>{$v['video_title']}</td>
+                                    <td align='center'>{date('Y-m-d H:i:s',$v['log_time'])}</td>
+									<td align='center'>{$v['video_author']}</td>
+                                    <td align='center'>
+                                    	<a href="{BASE_PATH}/index.php/Admin_Video/sort/id/{$v['id']}/s/up">上</a>
+									| <a href="{BASE_PATH}/index.php/Admin_Video/sort/id/{$v['id']}/s/down">下</a> 
+									| <a href="{BASE_PATH}/index.php/Admin_Video/edit/id/{$v['id']}">编辑</a>
+									| <a href="javascript:confirmurl('{BASE_PATH}/index.php/Admin_Video/del/id/{$v['id']}', '是否删除?')">删除</a>
+									</td>
+                                </tr>
+                         {/loop}
+                    </tbody>
+                </table>
+				<div class="page">{$this->page}</div>	
+            </div>
+			<div class="btn">
+                 
+			</div>
+        </div>
+         <script type="text/javascript">
+            <!--
+            function infomation(id) {
+                
+                window.top.art.dialog(
+				{title:'查看',id:'info',iframe:'{BASE_PATH}/index.php/Admin_Video/showInfo/id/'+id,width:'700',height:'500'}
+				);
+            }
+            function edit(id, name) {
+                window.top.art.dialog({title:'修改《'+name+'》',id:'edit',iframe:'/index.php/user/editUser/id/'+id,width:'700',height:'500'});
+            }
+            //-->
+        </script>
+    </body>
+</html>

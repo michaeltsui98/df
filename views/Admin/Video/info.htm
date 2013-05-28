@@ -1,0 +1,32 @@
+{include admin/header}
+        <div class="pad-lr-10">
+            <div class="table-list">
+                <div class="common-form">
+                    <fieldset>
+                        <legend>详细信息</legend>
+                        <table width="100%" class="table_form">
+                            <tr>
+                                <td width="120">日志记录</td>
+                                <td>{$this->info['log_msg']}</td>
+                            </tr>
+                            <tr>
+                                <td>用户名</td>
+                                <td>{$this->info['user_name']}</td>
+                            </tr>
+                            <tr>
+                                <td>时间</td>
+                                <td>{date('Y-m-d H:i:s',$this->info['log_time'])}</td>
+                            </tr>
+                            
+                        </table>
+                    </fieldset>
+                    <div class="bk15"></div>
+                </div>
+                <div class="bk15"></div>
+                <input type="button" class="dialog" name="dosubmit" value="Close" id="dosubmit" onclick="window.top.art.dialog({id:'info'}).close();"/>
+            </div>
+        </div>
+    </body>
+</html>
+
+
