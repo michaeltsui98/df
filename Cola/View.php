@@ -19,6 +19,9 @@ class Cola_View
      * @var string
      */
     protected $_widgetsHome = '';
+    
+    protected $_layout = '';
+    
 
     /**
      * Constructor
@@ -40,6 +43,10 @@ class Cola_View
     public function setBasePath($path)
     {
         $this->_basePath = $path;
+    }
+    public function setLayout($layout)
+    {
+        $this->_layout = $layout;
     }
 
     /**
@@ -80,6 +87,15 @@ class Cola_View
         extract($view);
         include Cola_Tpl::template($tpl);
         return ob_get_clean();
+    }
+    /**
+     * 设置模板
+     * @param string $tpl
+     * @param string $layout
+     */
+    protected function _tpl($tpl,$layout){
+    	
+    	
     }
 
     /**

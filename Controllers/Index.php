@@ -13,9 +13,10 @@ class Controllers_Index extends Cola_Controller
     
     function indexAction(){
             
-        self::request()->isAjax();
-        
-        $this->view()->display('view.php','views/Index');
+         
+         
+        $this->display();
+         
          /* echo "home_page".__FUNCTION__;
         echo '<br/>';
         //直接调用模型

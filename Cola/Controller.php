@@ -80,6 +80,13 @@ class Cola_Controller
 
         return $this->view = new Cola_View($params);
     }
+    /**
+     * 设置布局
+     * @param string $layout
+     */
+    protected  function setLayout($layout){
+    	$this->view->setLayout($layout);
+    }
 
     /**
      * Display the view
@@ -88,10 +95,13 @@ class Cola_Controller
      */
     protected function display($tpl = null, $dir = null)
     {
-        if (empty($tpl)) $tpl = $this->defaultTemplate();
-
+        if (empty($tpl)) $tpl = $this->defaultTpl();
+         
+        
         $this->view->display($tpl, $dir);
     }
+    
+    
 
     /**
      * to 404
@@ -132,8 +142,17 @@ class Cola_Controller
                 . DIRECTORY_SEPARATOR
                 . substr($dispatchInfo['action'], 0, -6)
                 . $this->_tplExt;
-
         return $tpl;
+    }
+    /**
+     * 指定默认的模板
+     */
+    protected  function defaultTpl(){
+    	$cola = Cola::getInstance();
+    	$dispatchInfo = $cola->getDispatchInfo();
+    	$controller = strtr($dispatchInfo['controller'],array('Controllers_'=>''));
+    	$action  = strtr($dispatchInfo['action'], array('Action'=>''));
+		return $controller.'/'.$action;
     }
 
     /**
