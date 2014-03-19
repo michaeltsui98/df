@@ -7,11 +7,12 @@ global  $_K;
 $_K ['i'] = 0;
 $_K ['block_search'] = $_K ['block_replace'] = array ();
 define('CHARSET', 'utf-8');
-//模板缓存
-define(TPL_CACHE, 0);
+define('TPL_CACHE', TRUE);
+
 class Cola_Tpl {
 	
 	static private  $tpl_path = 'views/tpl_c';
+	
 	
 	static function parse_code($tag_code, $tag_id, $tag_type = 'tag') {
 		 
@@ -38,7 +39,6 @@ class Cola_Tpl {
 		//read
 		if (! is_file( $tplfile )) {
 			throw  new Cola_Exception($tplfile.'文件不存在！');
-		
 		}
 		
 		$template = Cola_Tpl::sreadfile ( $tplfile );
@@ -81,8 +81,12 @@ class Cola_Tpl {
 		//$template = preg_replace ( '/{c\:(.+?)(,?)(\d?)\}/ie', "Curren::currtags('\\1','\\3')", $template );
 		////头像处理
 		//$template = preg_replace ( '/\{avatar\((.+?),(.+?)\)\}/ie', "Cola_Tpl::avatar('\\1','\\2')", $template );
+		//widget 处理
+		$template = preg_replace ( '/\{widget\((.+?),(.+?)\)\}/ie', "Cola_Tpl::widget('\\1','\\2')", $template );
+		//widget 可以带参数的
+		$template = preg_replace ( '/\{widgetp\((.+?),(.+?),(.+?)\)\}/ie', "Cola_Tpl::widgetp('\\1','\\2','\\3')", $template );
 		//文字裁剪
-		//$template = preg_replace ( '/\{cutstr\((.+?),(.+?)\)\}/ie', "Cola_Tpl::cutstr('\\1','\\2')", $template );
+		$template = preg_replace ( '/\{cutstr\((.+?),(.+?)\)\}/ie', "Cola_Tpl::cutstrtags('\\1','\\2')", $template );
 		
 		//PHP代码
 		$template = preg_replace ( "/\<\!\-\-\{eval\s+(.+?)\s*\}\-\-\>/ies", "Cola_Tpl::evaltags('\\1')", $template );
@@ -233,20 +237,91 @@ class Cola_Tpl {
 		return $search;
 	}
 	/**
-	 * 文字裁剪
+	 * 执行一个挂件
+	 * @param string $c
+	 * @param string $a
+	 * @return string
+	 */
+	static function widget($c, $a) {
+		global $_K;
+		$_K ['i'] ++;
+		$search = "<!--READ_TAG_{$_K['i']}-->";
+		$_K ['block_search'] [$_K ['i']] = $search;
+		
+		$_K ['block_replace'] [$_K ['i']] = "<?php echo Cola_Tpl::widget_out($c,$a) ?>";
+		return $search;
+	}
+	public static function widget_out($c,$a){
+	    $c = "controllers_$c";
+	    $cls_name = new $c;
+	    if(method_exists($cls_name, $a)){
+	        //call_user_func_array(array($cls_name,$a),$p);
+	        return call_user_func(array($cls_name,$a));
+	    }elseif(method_exists($cls_name, $a.'Action')){
+	        return call_user_func(array($cls_name,$a.'Action'));
+	    }else{
+	        throw new Exception("not fond class $c mothed $a ");
+	    }
+	}
+	/**
+	 * 带参数的部件输出
+	 * @param string $class 不带controllers_
+	 * @param string $func  带Action
+	 * @param array $param
+	 */
+	public static function widgetByParam($class,$func,$params){
+	    $clas_name = "controllers_$class";
+	    $cls = new $clas_name;
+	    $action = $func."Action";
+	    if(!is_array($params)){
+	        throw new Exception('$params->'.$params.' is not array');
+	    }
+	    if(method_exists($cls, $action)){
+	       return  call_user_func_array(array($cls, $action), $params);
+	        //call_user_method_array($method_name, $obj, $params)
+	    }else{
+	        throw new Exception($cls.'->'.$action.'not exists');
+	    }
+	}
+	/**
+	 * 标签替换
+	 * @param string $c
+	 * @param string $a
+	 * @param string $p
+	 * @return string
+	 */
+	public static function widgetp($c, $a,$p) {
+	    global $_K;
+	    $_K ['i'] ++;
+	    $search = "<!--READ_TAG_{$_K['i']}-->";
+	    $_K ['block_search'] [$_K ['i']] = $search;
+	
+	    $_K ['block_replace'] [$_K ['i']] = "<?php echo Cola_Tpl::widgetByParam($c,$a,$p) ?>";
+	    return $search;
+	}
+	/**
+	 * 文字裁剪标签
 	 * @param string $string
 	 * @param int $length
 	 * @return string
 	 */
-	static function cutstr($string,$length){
+	static function cutstrtags($string,$length){
 		global $_K;
 		$_K ['i'] ++;
 		$search = "<!--CUTSTR_TAG_{$_K['i']}-->";
 		$_K ['block_search'] [$_K ['i']] = $search;
-		$_K ['block_replace'] [$_K ['i']] = "<?php echo  Keke::cutstr($string,'$length') ?>";
+		$_K ['block_replace'] [$_K ['i']] = "<?php echo  Cola_Tpl::cutstr($string,'$length') ?>";
 		return $search;
 	}
-	
+	/**
+	 * 文字裁剪
+	 * @param string $string
+	 * @param int $length
+	 * @return Ambigous <string, string>
+	 */
+	static function cutstr($string,$length){
+	    return Cola_View::truncate($string, $length);
+	}
 	static function stripvtags($expr, $statement = '') {
 		$res = preg_replace ( "/\<\?\=(\\\$.+?)\?\>/s", "\\1", $expr );
 		$expr = strtr($res.$statement,array("\\\""=>"\""));

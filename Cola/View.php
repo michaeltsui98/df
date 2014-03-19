@@ -1,7 +1,7 @@
 <?php
 
 /**
- *
+ * Cola_View
  */
 class Cola_View
 {
@@ -19,10 +19,26 @@ class Cola_View
      * @var string
      */
     protected $_widgetsHome = '';
-    
-    protected $_layout = '';
-    
 
+    /**
+     * Cache config
+     *
+     * @var string|array
+     */
+    protected $_cacheConfig = '_cache';
+
+    /**
+     * Cache object
+     *
+     * @var Cola_Com_Cache
+     */
+    protected $_cache = NULL;
+
+    /**
+     * tpl layout
+     * @var html
+     */
+    protected $_layout = null;
     /**
      * Constructor
      *
@@ -32,7 +48,6 @@ class Cola_View
         if (isset($params['basePath'])) {
             $this->_basePath = $params['basePath'];
         }
-        
     }
 
     /**
@@ -44,10 +59,6 @@ class Cola_View
     {
         $this->_basePath = $path;
     }
-    public function setLayout($layout)
-    {
-        $this->_layout = $layout;
-    }
 
     /**
      * Get base path of views
@@ -58,44 +69,18 @@ class Cola_View
     {
         return $this->_basePath;
     }
+    
+    public function setLayout($layout){
+    	$this->_layout = $layout;
+    }
 
     /**
      * Render view
      *
      */
-    protected function _render_php($tpl, $dir = null)
+    protected function _render($tpl, $dir = NULL)
     {
-        if (null === $dir) $dir = $this->_basePath;
 
-        if ($dir) $dir = rtrim($dir, '/\\') . DIRECTORY_SEPARATOR;
-        ob_start();
-        ob_implicit_flush(0);
-        $file = $dir . $tpl;
-        include $file;
-        return ob_get_clean();
-    }
-    
-    protected function _render($tpl, $dir = null)
-    {
-        //if (null === $dir) $dir = $this->_basePath;
-    
-        //if ($dir) $dir = rtrim($dir, '/\\') . DIRECTORY_SEPARATOR;
-        ob_start();
-        ob_implicit_flush(0);
-        //$file = $dir . $tpl;
-        $view = (array)$this;
-        extract($view);
-        include Cola_Tpl::template($tpl);
-        return ob_get_clean();
-    }
-    /**
-     * 设置模板
-     * @param string $tpl
-     * @param string $layout
-     */
-    protected function _tpl($tpl,$layout){
-    	
-    	
     }
 
     /**
@@ -105,9 +90,12 @@ class Cola_View
      * @param string $dir
      * @return string
      */
-    public function fetch($tpl, $dir = null)
+    public function fetch($tpl, $dir = NULL)
     {
-        return $this->_render($tpl, $dir);
+        ob_start();
+        ob_implicit_flush(0);
+        $this->display($tpl, $dir);
+        return ob_get_clean();
     }
 
     /**
@@ -116,9 +104,11 @@ class Cola_View
      * @param string $tpl
      * @param string $dir
      */
-    public function display($tpl, $dir = null)
+    public function display($tpl, $dir = NULL)
     {
-        echo $this->_render($tpl, $dir);
+        NULL === $dir && $dir = $this->_basePath;
+        $dir = rtrim($dir, '/\\') . DIRECTORY_SEPARATOR;
+        include ($dir . $tpl);
     }
 
     /**
@@ -128,12 +118,44 @@ class Cola_View
      * @param mixed $data
      * @return string
      */
-    public function slot($file, $data = null)
+    public function slot($file, $data = NULL)
     {
         ob_start();
         ob_implicit_flush(0);
         include $file;
         return ob_get_clean();
+    }
+
+    /**
+     * 第三方模板解析
+     * @example 使用方法1:$this->view->tpl('test'); //加载/views/test.htm
+     * @example  使用方法2:$this->view->tpl('test','layout1'); //加载/views/test.htm,并加载父模板 /views/layout1.htm
+     * @param string $file  模板文件
+     * @param string $layout  模板父文件
+     */
+    public function tpl($file, $layout = NULL, $isReturn = FALSE)
+    {
+        ob_start();
+        ob_implicit_flush(0);
+        NULL == $layout and $layout = $this->_layout;
+        $view = (array) $this;
+        $view['_tpl'] = $file;
+        $view['_dir'] = $layout;
+        extract($view);
+        if (Cola_Request::isAjax()) {
+            include Cola_Tpl::template($file);
+        } else {
+            if ($layout !== null) {
+                include Cola_Tpl::template($layout);
+            } else {
+                include Cola_Tpl::template($file);
+            }
+        }
+
+        if ($isReturn) {
+            return ob_get_clean();
+        }
+        echo ob_get_clean();
     }
 
     /**
@@ -163,9 +185,9 @@ class Cola_View
      *
      * @param string $name
      * @param array $data
-     * @return Cola_Com_Widget
+     * @return Cola_Exception
      */
-    public function widget($name, $data = null)
+    public function widget($name, $data = NULL)
     {
         if (empty($this->_widgetsHome) && $widgetsHome = Cola::$_config->get('_widgetsHome')) {
             $this->_widgetsHome = $widgetsHome;
@@ -220,12 +242,12 @@ class Cola_View
      * @param string $regex
      * @return string
      */
-    public static function truncate($str, $limit, $encoding = 'UTF-8', $suffix = '...', $regex = null)
+    public static function truncate($str, $limit, $encoding = 'UTF-8', $suffix = '...', $regex = NULL)
     {
         if (function_exists('mb_strwidth')) {
             return self::mbTruncate($str, $limit, $encoding, $suffix);
         }
-        return self::regexTruncate($str, $limit, $encoding, $suffix, $regex = null);
+        return self::regexTruncate($str, $limit, $encoding, $suffix, $regex = NULL);
     }
 
     /**
@@ -239,7 +261,9 @@ class Cola_View
      */
     public static function mbTruncate($str, $limit, $encoding = 'UTF-8', $suffix = '...')
     {
-        if (mb_strwidth($str, $encoding) <= $limit) return $str;
+        if (mb_strwidth($str, $encoding) <= $limit) {
+            return $str;
+        }
 
         $limit -= mb_strwidth($suffix, $encoding);
         $tmp = mb_strimwidth($str, 0, $limit, '', $encoding);
@@ -256,7 +280,7 @@ class Cola_View
      * @param string $regex
      * @return string
      */
-    public static function regexTruncate($str, $limit, $encoding = 'UTF-8', $suffix = '...', $regex = null)
+    public static function regexTruncate($str, $limit, $encoding = 'UTF-8', $suffix = '...', $regex = NULL)
     {
         $defaultRegex = array(
             'UTF-8' => "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/",
@@ -267,8 +291,8 @@ class Cola_View
 
         $encoding = strtoupper($encoding);
 
-        if (null === $regex && !isset($defaultRegex[$encoding])) {
-            throw new Exception("Truncate failed: not supported encoding, you should supply a regex for $encoding encoding");
+        if (NULL === $regex && !isset($defaultRegex[$encoding])) {
+            throw new Cola_Exception("Truncate failed: not supported encoding, you should supply a regex for $encoding encoding");
         }
 
         $regex || $regex = $defaultRegex[$encoding];
@@ -280,10 +304,14 @@ class Cola_View
 
         foreach ($match[0] as $word) {
             $len += strlen($word) > 1 ? 2 : 1;
-            if ($len > $trueLimit) continue;
+            if ($len > $trueLimit) {
+                continue;
+            }
             $pos++;
         }
-        if ($len <= $limit) return $str;
+        if ($len <= $limit) {
+            return $str;
+        }
         return join("", array_slice($match[0], 0, $pos)) . $suffix;
     }
 
@@ -293,13 +321,14 @@ class Cola_View
      * @param string $key
      * @param mixed $value
      */
-    public function __set($key, $value = null)
+    public function __set($key, $value = NULL)
     {
         $this->$key = $value;
     }
 
     /**
      * get images from mogilefs
+     *
      * @param string $filename
      * @param string $type
      * @param string $size
@@ -308,20 +337,41 @@ class Cola_View
      */
     function getImage($filename, $type, $size, $icon = '')
     {
-        if (empty($filename)) {
-            return ($icon == 'icon') ? HTTP_UI . "common/image/def-{$type}-$size.gif" : HTTP_UI . "common/image/{$type}-$size.gif";
-        } else {
+        //获取默认图标
+        if (empty($filename) || !preg_match('/([^\>\s]{1,255})\.(jpg|gif|png)/i', $filename)) {
+            return ($icon == 'icon') ? HTTP_UI . "common/image/def-{$type}-{$size}.gif" : HTTP_UI . "common/image/{$type}-{$size}.gif";
+        }
+
+        // 默认缓存图片路径
+        if (NULL === $this->_cache) {
+            is_string($this->_cacheConfig) && $this->_cacheConfig = Cola::$_config->get($this->_cacheConfig);
+            $this->_cache = Cola_Com_Cache::factory($this->_cacheConfig);
+        }
+        $key = md5($filename . $type . $size . $icon);
+        $data = $this->_cache->get($key);
+        if (!$data) {
+            //获取远程图片
             $n = pathinfo($filename);
             $config = Cola::$_config->get('_imageUpload');
             $mfs = new Cola_Com_Mogilefs($config['mogilefs']['domain'], $config['mogilefs']['class'], $config['mogilefs']['trackers']);
             $filename = $n['filename'] . '-' . $size . '.' . $n['extension'];
+
             if ($mfs->exists($filename)) {
-                return HTTP_MFS_IMG . $filename;
+                $data = HTTP_MFS_IMG . $filename;
+                //图片存在缓存24小时
+                $this->_cache->set($key, $data, 60 * 60 * 24);
+                return $data;
             } else {
-                $type = (in_array($n['filename'], array('info-b', 'info-g'))) ? $n['filename'] : $type;
-                return ($icon == 'icon') ? HTTP_UI . "common/image/def-{$type}-$size.gif" : HTTP_UI . "common/image/{$type}-$size.gif";
+                //是用户头像返回性别图标
+                $data = ('icon' == $icon && in_array($n['filename'], array('info-b', 'info-g'))) ?
+                        HTTP_UI . "common/image/{$n['filename']}-{$size}.gif" : HTTP_UI . "common/image/{$type}-{$size}.gif";
+                //图片不存在缓存30分钟
+                $this->_cache->set($key, $data, 60 * 60 * 30);
+                return $data;
             }
         }
+
+        return $data;
     }
 
     /**
@@ -331,20 +381,18 @@ class Cola_View
      */
     public static function checkhtml($html)
     {
-        $html = stripslashes($html);
-        preg_match_all("/\<([^\<]+)\>/is", $html, $ms);
+        preg_match_all('/\<([^\<]+)\>/is', stripslashes($html), $ms);
         $searchs[] = '<';
         $replaces[] = '&lt;';
         $searchs[] = '>';
         $replaces[] = '&gt;';
         if ($ms[1]) {
-//            $allowtags = 'img|a|font|div|table|tbody|caption|tr|td|th|br|p|b|i|u|ol|ul|li|blockquote|object|param|embed'; //����ı�ǩ
+//            $allowtags = 'img|a|font|div|table|tbody|caption|tr|td|th|br|p|b|i|u|ol|ul|li|blockquote|object|param|embed';
             $allowtags = '';
             $ms[1] = array_unique($ms[1]);
             foreach ($ms[1] as $value) {
-                $searchs[] = "&lt;" . $value . "&gt;";
-                $value = self::shtmlspecialchars($value);
-                $value = str_replace(array('\\', '/*'), array('.', '/.'), $value);
+                $searchs[] = '&lt;' . $value . '&gt;';
+                $value = str_replace(array('\\', '/*'), array('.', '/.'), self::shtmlspecialchars($value));
                 $skipkeys = array('onabort', 'onactivate', 'onafterprint', 'onafterupdate', 'onbeforeactivate', 'onbeforecopy', 'onbeforecut', 'onbeforedeactivate',
                     'onbeforeeditfocus', 'onbeforepaste', 'onbeforeprint', 'onbeforeunload', 'onbeforeupdate', 'onblur', 'onbounce', 'oncellchange', 'onchange',
                     'onclick', 'oncontextmenu', 'oncontrolselect', 'oncopy', 'oncut', 'ondataavailable', 'ondatasetchanged', 'ondatasetcomplete', 'ondblclick',
@@ -355,7 +403,7 @@ class Cola_View
                     'onrowenter', 'onrowexit', 'onrowsdelete', 'onrowsinserted', 'onscroll', 'onselect', 'onselectionchange', 'onselectstart', 'onstart', 'onstop',
                     'onsubmit', 'onunload', 'javascript', 'script', 'eval', 'behaviour', 'expression', 'style', 'class');
                 $skipstr = implode('|', $skipkeys);
-                $value = preg_replace(array("/($skipstr)/i"), '.', $value);
+                $value = preg_replace(array("/({$skipstr})/i"), '.', $value);
                 if (!preg_match("/^[\/|\s]?($allowtags)(\s+|$)/is", $value)) {
                     $value = '';
                 }
@@ -393,11 +441,11 @@ class Cola_View
     {
         switch ($key) {
             case 'config':
-                $this->config = Cola::config();
+                $this->config = Cola::$_config;
                 return $this->config;
 
             default:
-                return null;
+                return NULL;
         }
     }
 

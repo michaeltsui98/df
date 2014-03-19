@@ -112,7 +112,7 @@ class Cola
         static $cache = null;
         $regName = "_cache";
         if (!$cache = Cola::getReg($regName)) {
-            $config = (array) Cola::$_config->get('_routecache');
+            $config = (array) Cola::$_config->get('_cache');
             $cache = Cola_Com_Cache::factory($config);
             Cola::setReg($regName, $cache);
         }

@@ -40,6 +40,25 @@ class Cola_Controller
      * @var array
      */
     protected $_error;
+    
+    /**
+     * 是否开启视图缓存
+     * @var bool
+     */
+    protected  $_isCache = false;
+    
+    /**
+     * 视图缓存前缀
+     * @var string
+     */
+    protected  $_cachePrex = '';
+    
+    /**
+     * 视图缓存时间
+     * @var int
+     */
+    protected $_lifeTime = 900;
+    
  
     /**
      * Constructor
@@ -87,7 +106,19 @@ class Cola_Controller
     protected  function setLayout($layout){
     	$this->view->setLayout($layout);
     }
-
+    /**
+     * 开启视图缓存
+     * @param string $isCache
+     * @param string $prex
+     * @param int $lifeTime  如果$lifeTime=0 则删除视图缓存 
+     */
+    protected  function setViewCache($isCache=true,$prex=null,$lifeTime=null){
+    	$this->_isCache = $isCache;
+    	$this->_cachePrex = $prex;
+    	if($lifeTime!==null){
+    		  $this->_lifeTime = $lifeTime;
+    	}
+    }
     /**
      * Display the view
      *
@@ -95,12 +126,43 @@ class Cola_Controller
      */
     protected function display($tpl = null, $dir = null)
     {
-        if (empty($tpl)) $tpl = $this->defaultTpl();
-         
-        
+        NULL === $tpl && $tpl = $this->defaultTemplate();
         $this->view->display($tpl, $dir);
     }
-    
+    /**
+     * 加载模板
+     */
+    protected  function tpl($tpl=null,$layout=null){
+    	NULL== $tpl and $tpl = $this->defaultTpl();
+    	if($this->_isCache==true){
+	    	$key = 'views:'.hash('md5',$_SERVER['REQUEST_URI'].$this->_cachePrex);
+	    	
+	    	if($this->_lifeTime==0){
+	    		//删除缓存
+	    		self::cache()->delete($key);
+	    	}else{
+	    		$content = self::cache()->get($key);
+	    		if($content){
+	    			echo $content;
+	    			return false;
+	    		}
+	    	}
+	    	$content = $this->view->tpl($tpl,$layout,true);
+    		if($content and $this->_lifeTime){
+    			self::cache()->set($key,$content,$this->_lifeTime);
+    		}
+    		echo $content;
+	    }else{
+    		$this->view->tpl($tpl,$layout);
+    	}
+    }
+    /**
+     * @return Cola_Com_Cache
+     */
+    protected static function cache(){
+    	$config = (array) Cola::$_config->get('_cache');
+    	return  Cola_Com_Cache::factory($config);
+    }
     
 
     /**

@@ -8,44 +8,21 @@ class Controllers_Index extends Cola_Controller
    protected static  $_model = NULL;
     
     function __construct(){
-        //self::$_model = new Models_Index();
+       
     }
     
     function indexAction(){
             
+    	 $pageTitle = '首页信息测试';
+    	
+         $layout = 'layout/index';
+         $this->setLayout($layout);
          
-         
-        $this->display();
-         
-         /* echo "home_page".__FUNCTION__;
-        echo '<br/>';
-        //直接调用模型
-        $m = new Models_Index();
-        echo $m->test();
-        //控制器调用控制器
-        $nn = new Controllers_Dir_Net();
-        echo $nn->indexAction();
-        //直接调用带目录的模型
-        echo "<p/>";
-        $sub = new Models_Sub_net();
-        echo $sub->subNet();
-         */
-         /* $res = Orm_DB::select()->from('keke_witkey_ad')
-        ->where('ad_id', '=', '292')
-        ->getCol()
-        ->execute();  */
-        //$model = new Models_Index();
-       // $res = self::$_model->test();
-       // $res = $this->model('Index','models')->test();
-       //throw new Cola_Exception('eroror test');
-        //$i = 5/0;
-        //$model = new Models_Index();
-        //$res = $model->testModel();
-        
-        //var_dump($res);
-        
-       
-        
+        // $log = Cola_Model::init()->sql("select * from sch_log");
+         $this->view->vars = get_defined_vars();
+         //$this->setViewCache(false);
+         $this->tpl();
+          
     }
     function setCacheAction(){
         $res = Cola::cache('test','i love you ',6000);
