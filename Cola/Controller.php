@@ -212,9 +212,10 @@ class Cola_Controller
     protected  function defaultTpl(){
     	$cola = Cola::getInstance();
     	$dispatchInfo = $cola->getDispatchInfo();
-    	$controller = strtr($dispatchInfo['controller'],array('Controllers_'=>''));
+    	$controller = strtr($dispatchInfo['controller'],array('Controllers_'=>'','controllers_'=>''));
+    	$controller = strtr($controller,array('_'=>'/'));
     	$action  = strtr($dispatchInfo['action'], array('Action'=>''));
-		return $controller.'/'.$action;
+    	return $controller.'/'.$action;
     }
 
     /**
