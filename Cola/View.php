@@ -161,7 +161,7 @@ class Cola_View
     /**
      * Set widgets home dir
      *
-     * @param strong $dir
+     * @param string $dir
      * @return Cola_View
      */
     public function setWidgetsHome($dir)
