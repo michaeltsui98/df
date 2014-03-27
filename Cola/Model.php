@@ -52,15 +52,19 @@ class Cola_Model
     const SYSTEM_ERROR = -8;
     const VALIDATE_ERROR = -7;
 
-    protected static $_instance = NULL;
+    protected static $_instance = array();
+
     /**
      * @return self
      */
-    public static function init(){
-        if(self::$_instance === NULL){
-            self::$_instance = new static();
+    public static function init()
+    {
+        $cls = get_called_class();
+
+        if (isset(self::$_instance[$cls]) && is_object(self::$_instance[$cls])) {
+            return self::$_instance[$cls];
         }
-        return self::$_instance;
+        return self::$_instance[$cls] = new static();
     }
     
     /**
