@@ -13,7 +13,7 @@ class Controllers_Disk extends Cola_Controller
      */
     function indexAction ()
     {
-        $this->view->row = Models_Disk::init()->getDiskCount();
+       // $this->view->row = Models_Disk::init()->getDiskCount();
         $this->view->a ='test'; 
         
         //$data = $this->getComment();
@@ -28,7 +28,7 @@ class Controllers_Disk extends Cola_Controller
         
         
         //var_dump($arr);
-        var_dump($this->view->row);
+       // var_dump($this->view->row);
         $this->display('index');
     }
     function sysLog($cont){
