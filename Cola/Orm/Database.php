@@ -402,6 +402,7 @@ abstract class Orm_Database {
 	 */
 	public function table_prefix()
 	{
+		$this->_config = Cola::getInstance()->config->get('_db');
 	    return $this->_config['table_prefix'];
 	}
 

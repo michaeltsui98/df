@@ -119,14 +119,26 @@ class Cola_Router
         $dispatchInfo = array();
 
         $tmp = explode('/', $pathInfo);
-        $controller = current($tmp);
-        if (!empty($controller)) {
-            $dispatchInfo['controller'] = 'Controllers_'.ucfirst($controller) ;
-        } else {
-            $dispatchInfo['controller'] = $this->_dynamicRule['defaultController'];
+        $modelus = Cola::getInstance()->config->get('_modules');
+        //var_dump($tmp,$pathInfo);
+        
+        $modelus = array_flip($modelus);
+        
+        if(isset($modelus[$tmp[0]])){
+        	$dispatchInfo['controller'] = 'Modules_'.current($tmp).'_Controllers_'.ucfirst(next($tmp));
+        	$action = next($tmp);
+        }else{
+	        $controller = current($tmp);
+	        if (!empty($controller)) {
+	            $dispatchInfo['controller'] = 'Controllers_'.ucfirst($controller) ;
+	        } else {
+	            $dispatchInfo['controller'] = $this->_dynamicRule['defaultController'];
+	        }
+	        $action = next($tmp);
         }
 
-        $action = next($tmp);
+      //var_dump($dispatchInfo['controller'],$action);
+        //die;
         if (!empty($action)) {
             $dispatchInfo['action'] = $action . 'Action';
         } else {

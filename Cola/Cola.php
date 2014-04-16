@@ -224,7 +224,7 @@ class Cola
         
         //var_dump($className);
         $classFile = strtr($className,array('_'=>DIRECTORY_SEPARATOR)) . '.php';
-
+        //var_dump($classFile,get_included_files());
         //if (file_exists($classFile)) {
             include $classFile;
         //}
@@ -308,8 +308,9 @@ class Cola
             /* if (!self::loadClass($dispatchInfo['controller'], $classFile)) {
                 throw new Cola_Exception_Dispatch("Can't load controller:{$dispatchInfo['controller']}");
             } */
-            //var_dump( $dispatchInfo['controller']);die;
+            //var_dump( $dispatchInfo['controller']);
             $controller = new $dispatchInfo['controller']();
+            //var_dump($controller);die;
         }
 
         if (isset($dispatchInfo['action'])) {

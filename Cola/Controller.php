@@ -90,7 +90,7 @@ class Cola_Controller
      */
     protected function view($params = array())
     {
-        $params = (array) $params + array('basePath' => $this->_viewsHome) + (array) Cola::$_config->get('_view');
+        $params = (array) $params + array('basePath' => $this->_viewsHome) + (array) Cola::getInstance()->config->get('_view');
 
         return $this->view = new Cola_View($params);
     }
@@ -100,6 +100,22 @@ class Cola_Controller
      */
     protected  function setLayout($layout){
     	$this->view->setLayout($layout);
+    }
+    /**
+     * 获取当前默认布局
+     */
+    public  function getCurrentLayout($controller){
+    	
+    	$arr = explode('_', $controller);
+    	$modules = array_flip(Cola::config()->get('_modules'));
+    	$layout = '';
+    	if(isset($modules[$arr[1]])){
+    	   	 $layout = current($arr).'/'.next($arr).'/Views/Layout/';
+    	}else{
+    		 $layout = 'views/layout/';
+    	}
+    	
+    	return $layout;
     }
     /**
      * 开启视图缓存
@@ -142,13 +158,14 @@ class Cola_Controller
 	    			return false;
 	    		}
 	    	}
+	    	
 	    	$content = $this->view->tpl($tpl,$layout,true);
     		if($content and $this->_lifeTime){
     			self::cache()->set($key,$content,$this->_lifeTime);
     		}
     		echo $content;
 	    }else{
-    		$this->view->tpl($tpl,$layout);
+	    	$this->view->tpl($tpl,$layout);
     	}
     }
     /**
@@ -210,6 +227,14 @@ class Cola_Controller
     	$controller = strtr($dispatchInfo['controller'],array('Controllers_'=>'','controllers_'=>''));
     	$controller = strtr($controller,array('_'=>'/'));
     	$action  = strtr($dispatchInfo['action'], array('Action'=>''));
+    	$controller_arr = explode('_', $dispatchInfo['controller']);
+    	$tmp = current($controller_arr);
+    	
+    	if($tmp=='Modules'){
+    		return current($controller_arr).'/'.next($controller_arr).'/Views/'.end($controller_arr).'/'.$action.'.htm';
+    	}
+    	//$modules = array_flip(Cola::config()->get('_modules'));
+    	//die;
     	return $controller.'/'.$action;
     }
 

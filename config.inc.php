@@ -42,7 +42,7 @@ $config = array(
             'namespace' => 'df',
             'viewUrl' => 'http://localhost/xhprof/xhprof_html/index.php',
     ),
-
+    '_modules'=>array('Admin','Sm','Xl'),
     '_modelsHome'      => 'Models',
     '_controllersHome' => 'Controllers',
     '_viewsHome'       => 'views',

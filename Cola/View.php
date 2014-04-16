@@ -141,6 +141,7 @@ class Cola_View
         $view = (array) $this;
         $view['_tpl'] = $file;
         $view['_dir'] = $layout;
+        //var_dump($file,$layout);
         extract($view);
         if (Cola_Request::isAjax()) {
             include Cola_Tpl::template($file);

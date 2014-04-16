@@ -320,6 +320,20 @@ class Cola_Model
 
         return $this->_table;
     }
+    /**
+     * Set PK 
+     * @param string $colum
+     * @return Cola_Model|string
+     */
+    public function pk($colummName = null)
+    {
+        if (!is_null($colummName)) {
+            $this->_pk = $colummName;
+            return $this;
+        }
+
+        return $this->_pk;
+    }
 
     /**
      * Get or set error
@@ -450,6 +464,7 @@ class Cola_Model
         }
         return " LIMIT " . $start . " ," . $limit;
     }
+    
     function dataList ($page = 1, $pageSize = 20, $fid,$cond,$val,$url,$order='')
     {
         $wh = '1';
@@ -483,6 +498,65 @@ class Cola_Model
                 'page' => $pageHtml
         );
         return $result;
+    }
+    /**
+     * 通过sql 获取数据与分页信息
+     *
+     * @param string $sql
+     *            不要带limit子句，本方法会依据参数生成
+     * @param int $page
+     *            1
+     * @param int $limit
+     *            20
+     * @param string $url
+     *            BASE_PATH."/index.php/Admin_Log/index/page/%page%/fid/$fid/cond/$cond/val/$val";
+     * @return boolean multitype:string <mixed, resource>
+     */
+    public function sqlPager($sql, $page, $limit, $url, $ajax = 0)
+    {
+    	(int) $page or $page = 1;
+    	(int) $limit or $limit = 20;
+    
+    	if ($page > 0) {
+    		$start = ($page - 1) * $limit;
+    		$limits = ' limit ' . $start . ',' . $limit;
+    	}
+    	$data = $this->sql($sql . $limits);
+    	$sql = "select count(*) from (" . $sql . ") as sy";
+    	$count = $this->db()->col($sql);
+    
+    	$pager = new Cola_Com_Pager($page, $limit, $count, $url, $ajax);
+    	$html = $pager->html();
+    	if (!$data)
+    		return false;
+    	return array(
+    			'data' => $data,
+    			'page' => $html,
+    			'count' => $count
+    	);
+    }
+    
+    /**
+     * 分页时，获取当前页的url地址.
+     *
+     * @return string
+     */
+    public function getPageUrl()
+    {
+    	$uri_arr = parse_url($_SERVER['REQUEST_URI']);
+    	if (isset($uri_arr['query'])) {
+    		parse_str($uri_arr['query'], $query_arr);
+    		unset($query_arr['page']);
+    		if ($query_arr) {
+    			$url = $uri_arr['path'] . '?' . http_build_query($query_arr) .
+    			'&page=%page%';
+    		} else {
+    			$url = $uri_arr['path'] . '?page=%page%';
+    		}
+    	} else {
+    		$url = $uri_arr['path'] . '?page=%page%';
+    	}
+    	return $url;
     }
 
 }

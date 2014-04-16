@@ -7,7 +7,7 @@ global  $_K;
 $_K ['i'] = 0;
 $_K ['block_search'] = $_K ['block_replace'] = array ();
 define('CHARSET', 'utf-8');
-define('TPL_CACHE', TRUE);
+define('TPL_CACHE', FALSE);
 
 class Cola_Tpl {
 	
@@ -252,8 +252,13 @@ class Cola_Tpl {
 		return $search;
 	}
 	public static function widget_out($c,$a){
-	    $c = "controllers_$c";
-	    $cls_name = new $c;
+		
+		$arr = explode('_', $c);
+		 
+		if($arr[0]!='Modules'){
+		    $c = "controllers_$c";
+		}
+		$cls_name = new $c;
 	    if(method_exists($cls_name, $a)){
 	        //call_user_func_array(array($cls_name,$a),$p);
 	        return call_user_func(array($cls_name,$a));
@@ -270,8 +275,14 @@ class Cola_Tpl {
 	 * @param array $param
 	 */
 	public static function widgetByParam($class,$func,$params){
-	    $clas_name = "controllers_$class";
-	    $cls = new $clas_name;
+		$arr = explode('_', $class);
+			
+		if($arr[0]!='Modules'){
+			//$c = "controllers_$c";
+		    $class = "controllers_$class";
+		}
+		
+	    $cls = new $class;
 	    $action = $func."Action";
 	    if(!is_array($params)){
 	        throw new Exception('$params->'.$params.' is not array');
@@ -346,13 +357,12 @@ class Cola_Tpl {
 	static function sreadfile($filename) {
 		
 		if (function_exists ( 'file_get_contents' )) {
-			return  file_get_contents ( $filename );
+			   $content =   file_get_contents ( $filename );
 		} elseif ($fp = fopen ( $filename, 'r' )) {
 			 	$content = fread ( $fp, filesize ( $filename ) );
 				fclose ( $fp );
-				return $content;
-		}
-		
+ 		}
+		return $content;
 	}
 	//写入文件
 	static function swritefile($filename, $writetext, $openmod = 'w') {
@@ -371,11 +381,13 @@ class Cola_Tpl {
 	}
 	
 	static function tpl_exists($tplname) {
-		 
-		if(file_exists( S_ROOT . "views/$tplname.htm" )){
+
+		if(file_exists(S_ROOT.$tplname)){
+		    $tpl =  strtr($tplname,array('.htm'=>''));
+		}else if(file_exists( S_ROOT . "views/$tplname.htm" )){
 			$tpl = "views/$tplname";
 		}else{
-			throw new Cola_Exception('views/'.$tplname.'.htm   file is not exists,plase check');
+			throw new Cola_Exception('模板文件不存在：'.$tplname.'   file is not exists,plase check');
 		}
 		return $tpl;
 	}
