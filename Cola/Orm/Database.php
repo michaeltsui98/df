@@ -107,7 +107,7 @@ abstract class Orm_Database {
 
 		// Store the config locally
 		$this->_config = $config;
-
+        
 		if (empty($this->_config['table_prefix']))
 		{
 			$this->_config['table_prefix'] = '';
@@ -402,7 +402,7 @@ abstract class Orm_Database {
 	 */
 	public function table_prefix()
 	{
-		return $this->_config['table_prefix'];
+	    return $this->_config['table_prefix'];
 	}
 
 	/**

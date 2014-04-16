@@ -25,8 +25,8 @@ class Cola_Com_Xhprof
     public function save($namespace = null, $logDir = null)
     {
         $xhprofData = xhprof_disable();
-
-        $this->_config = Cola::$_config->get('_xhprof') + array('namespace' => 'xhprof_cola', 'logDir' => '');
+        
+        $this->_config = Cola::getInstance()->config->get('_xhprof') + array('namespace' => 'xhprof_cola', 'logDir' => '');
 
         if (NULL == $namespace) {
             $namespace = $this->_config['namespace'];

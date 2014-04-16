@@ -67,12 +67,7 @@ class Cola_Controller
      */
     public function __construct()
     {
-        if (null === $this->_modelsHome) {
-            $this->_modelsHome = $this->config['_modelsHome'];
-        }
-        if (null === $this->_viewsHome) {
-            $this->_viewsHome = $this->config['_viewsHome'];
-        }
+         
     }
     
     
@@ -442,7 +437,7 @@ class Cola_Controller
                 return $this->response;
 
             case 'config':
-                $this->config = Cola::config();
+                $this->config = Cola::getInstance()->config;
                 return $this->config;
 
             default:

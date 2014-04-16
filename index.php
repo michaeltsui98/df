@@ -10,8 +10,8 @@ define('BASE_PATH', '/df');
 require 'Cola/Cola.php';
 $cola = Cola::getInstance ();
 
-$xh = new Cola_Com_Xhprof ();
-//$benchmark = new Cola_Com_Benchmark ();
+//$xh = new Cola_Com_Xhprof ();
+$benchmark = new Cola_Com_Benchmark ();
 $cola->boot ()->dispatch ();
-//echo "<br />cost:", $benchmark->cost (), 's';
-echo $a = $xh->save ();
+echo "<br />cost:", $benchmark->cost (), 's';
+//echo $a = $xh->save ();

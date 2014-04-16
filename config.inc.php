@@ -33,6 +33,7 @@ $config = array(
             'password' => '123456',
             'database' => 'df',
             'charset' => 'utf8',
+            'table_prefix'=>'',
             'persitent' => false
         
     ),

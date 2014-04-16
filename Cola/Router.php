@@ -32,7 +32,7 @@ class Cola_Router
      * Constructor
      *
      */
-    protected function __construct()
+    public function __construct()
     {
 
     }

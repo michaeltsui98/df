@@ -12,11 +12,11 @@ class Controllers_Dir_Net extends Cola_Controller
         //$res = Kohana_DB::query(Kohana_Database::SELECT, $sql)->execute();
         
       // $res =  Models_Sub_net::init()->subNet();
-        /* $res = Orm_DB::select('ad_id')
-            ->from('keke_witkey_ad')
-            ->where('ad_id', '=', 292)
+         $res = Orm_DB::select('*')
+            ->from('sch_log')
+            ->where('log_id', '=', 24)
             ->getCol()
-            ->execute(); */
+            ->execute(); 
         $res = 'sds';
         var_dump($res);
     }
