@@ -103,16 +103,20 @@ class Cola_Controller
     }
     /**
      * 获取当前默认布局
+     * @param string $controller 当前类
+     * @param string $file_name
+     * @return string
      */
-    public  function getCurrentLayout($controller){
+    public  function getCurrentLayout($file_name=null,$controller=null){
     	
+        null == $controller and $controller = get_called_class();
     	$arr = explode('_', $controller);
     	$modules = array_flip(Cola::config()->get('_modules'));
     	$layout = '';
     	if(isset($modules[$arr[1]])){
-    	   	 $layout = current($arr).'/'.next($arr).'/Views/Layout/';
+    	   	 $layout = current($arr).'/'.next($arr).'/Views/Layout/'.$file_name;
     	}else{
-    		 $layout = 'views/layout/';
+    		 $layout = 'views/layout/'.$file_name;
     	}
     	
     	return $layout;

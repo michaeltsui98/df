@@ -7,7 +7,7 @@ global  $_K;
 $_K ['i'] = 0;
 $_K ['block_search'] = $_K ['block_replace'] = array ();
 define('CHARSET', 'utf-8');
-define('TPL_CACHE', FALSE);
+//define('TPL_CACHE', FALSE);
 
 class Cola_Tpl {
 	
