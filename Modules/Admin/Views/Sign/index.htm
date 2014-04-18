@@ -1,6 +1,10 @@
 <h4>这里是后台登录</h4>
 <form action="{BASE_PATH}/index.php/Admin/Sign/login" method="post" accept-charset="utf-8">
-	<input type="text" name="user_name" >
-	<input type="password" name="password" >
+	<input type="text" name="user_name" value="admin" >
+	<input type="password" name="password" value="123456" >
+	<select name="xk">
+		<option value="sm">生命安全</option>
+		<option value="xl">心理健康</option>
+	</select>
 	<p><input type="submit" value="登录" /></p>
 </form>

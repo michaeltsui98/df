@@ -6,21 +6,62 @@
  * @author michaeltsui98@qq.com  2014-04-17
  *
  */
+include S_ROOT.'Models/AdminFunc.php';
 
 class Modules_Admin_Controllers_Base extends  Cola_Controller {
 	
+    public $c;
+    
+    public $a;
+    
+    public $xk;
+    
+    public $html;
+    
+    /**
+     * 前置执行Action
+     */
+    public function before()
+    {
+        $xk  = $this->getVar('xk');
+        $this->c = Cola::getInstance()->dispatchInfo['controller'];
+        $this->a = Cola::getInstance()->dispatchInfo['action'];
+        
+        $user = $_SESSION['admin_user'];
+        
+        // 如果用户没有登录，或者没有选择学科，退出到登录界面
+        if(!isset($user['user_uid']) or !$xk){
+            $this->redirect(BASE_PATH.'/index.php/Admin/Sign');
+            die;
+        }
+        
+        /* 后台菜单列表 */
+        $menu = Modules_Admin_Models_SysModule::init()->getMenu($user['user_group_id'], $xk);
+        
+        define('XK', $xk);
+        $this->view->c = $this->c;
+        $this->view->a = $this->a;
+        $this->view->menu = $menu;
+        $this->view->user = $user;
+        
+        //生成请求地址
+        
+    }
+    
+    public  function getRequestController(){
+    	return $this->c;
+    	
+    }
+    
 	public function __construct(){
 		//登录判断
-		$this->checkAdminLogin();
+		$this->before();
 	}
 	
-	/**
-	 * 判断用户是不是登录
-	 */
-	public function checkAdminLogin(){
-		if(!isset($_SESSION['user']['admin'])){
-			$this->redirect(BASE_PATH.'/index.php/Admin/Sign');
-		}	    
+	public function page($page,$limit,$count,$ajax){
+	    $url = Cola_Model::init()->getPageUrl();
+	    $pager = new Cola_Com_Pager($page, $limit, $count, $url, $ajax);
+	    return $html = $pager->html();
 	}
 		
 } 

@@ -536,6 +536,29 @@ class Cola_Model
     	);
     }
     
+    public function getListBySql($sql, $page, $limit, $url=null, $ajax = 0)
+    {
+        (int) $page or $page = 1;
+        (int) $limit or $limit = 20;
+        $url or $url = $this->getPageUrl();
+        if ($page > 0) {
+            $start = ($page - 1) * $limit;
+            $limits = ' limit ' . $start . ',' . $limit;
+        }
+        $data = $this->sql($sql . $limits);
+        $sql = "select count(*) from (" . $sql . ") as sy";
+        $count = $this->db()->col($sql);
+    
+        /* $pager = new Cola_Com_Pager($page, $limit, $count, $url, $ajax);
+        $html = $pager->html(); */
+        if (!$data)
+            return false;
+        return array(
+                'data' => $data,
+                'count' => $count
+        );
+    }
+    
     /**
      * 分页时，获取当前页的url地址.
      *

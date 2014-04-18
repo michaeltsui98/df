@@ -384,6 +384,8 @@ class Cola_Tpl {
 
 		if(file_exists(S_ROOT.$tplname)){
 		    $tpl =  strtr($tplname,array('.htm'=>''));
+		}elseif(file_exists(S_ROOT.$tplname.'.htm')){
+			$tpl = $tplname;
 		}else if(file_exists( S_ROOT . "views/$tplname.htm" )){
 			$tpl = "views/$tplname";
 		}else{
