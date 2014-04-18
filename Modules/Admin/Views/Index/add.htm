@@ -1,8 +1,7 @@
 <div id="tab1" class="tabcontent">
     <div class="form">
-    <form action="<!--{$moduleAdddo}-->" method="post" id="module_form" name="module_form" class="ui-form">
-                      <input name="init_token" type="hidden"  value="<!--{$init_token}-->" />
-					  <input type="hidden" id="module_id" name="data[module_id]"   />
+    <form action="{$addDoUrl}" method="post" id="module_form" name="module_form" class="ui-form">
+                      <input type="hidden" id="module_id" name="data[module_id]"   />
 
             <div class="form_row">
                 <label>上级模块：</label>
@@ -56,12 +55,7 @@
 
                <input class="ui-radio" type="radio" name="data[module_isok]" id="module_isok" value="1"  />正常
 	       <input class="ui-radio" type="radio" name="data[module_isok]" id="module_isok" value="0"  />禁用
-
-
             </div>
-
-
-
             <div class="ui-form-item">
                 <input type="submit" id="btn_submit" value="保存"/>
             </div> 

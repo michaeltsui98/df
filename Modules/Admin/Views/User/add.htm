@@ -1,7 +1,6 @@
 <div id="tab1" class="tabcontent">
     <div class="form">
-       <form action="<!--{$html['adddo']}-->" method="post" id="user_form" name="user_form" class="ui-form">
-					<input name="init_token" type="hidden"  value="<!--{$init_token}-->" />
+       <form action="<!--{$addUrl}-->" method="post" id="user_form" name="user_form" class="ui-form">
 					  <input type="hidden" id="user_id" name="data[user_id]"   />
 
             <div class="form_row">
@@ -43,13 +42,11 @@
             <div class="form_row">
                 <label>用户组：</label>
                 <select name="data[user_group_id]" class="form_select_200" id="user_group_id" datatype="*">
- 			        	<!--{if(isset($grouplist['list']))}-->
-			          	<!--{foreach($grouplist['list'] as $key=>$value)}-->
-			 			<!--{if(($value['group_id']!='')||(($value['group_id']=='')&&$value['have_child']))}-->
-                        <option value ="<!--{$value['group_id']}-->"><!--{$value['ext']}--><!--{$value['group_title']}--></option>
-                        <!--{/if}-->
-          				<!--{/foreach}-->
-        				<!--{/if}-->
+ 			        	 
+			          	{loop  $grouplist  $value}
+                        <option value ="<!--{$value['group_id']}-->"><!--{$value['group_title']}--></option>
+          				{/loop}
+        				 
 				</select>
 				<div class="info"><span class="ui-form-other"></span></div>
             </div>  
@@ -61,9 +58,6 @@
 
 				<div class="info"><span class="ui-form-other"></span></div>
             </div>
-
-
-
             <div class="ui-form-item">
                 <input type="submit" id="btn_submit" value="保存"/>
             </div> 

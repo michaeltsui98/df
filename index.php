@@ -23,5 +23,5 @@ session_start();
 Cola_Response::charset();
 
 $cola->dispatch ();
-echo "<br />cost:", $benchmark->cost (), 's';
+//echo "<br />cost:", $benchmark->cost (), 's';
 //echo $a = $xh->save ();

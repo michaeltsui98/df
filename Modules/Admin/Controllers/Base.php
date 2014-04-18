@@ -45,6 +45,14 @@ class Modules_Admin_Controllers_Base extends  Cola_Controller {
         $this->view->user = $user;
         //后台数据生成请求地址
         $this->view->getJsonDataUrl  = url($this->c, 'jsonAction');
+        //后台添加数据的url
+        $this->view->addUrl  = url($this->c, 'addAction');
+        $this->view->addDoUrl  = url($this->c, 'addDoAction');
+        //后台修改数据的url
+        $this->view->editUrl  = url($this->c, 'editAction');
+        $this->view->editDoUrl  = url($this->c, 'editDoAction');
+        //后台删除数据的url
+        $this->view->delUrl  = url($this->c, 'delAction');
     }
     
  

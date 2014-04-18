@@ -13,14 +13,13 @@ class Modules_Admin_Controllers_User extends  Modules_Admin_Controllers_Base {
 	    $this->view->title = '用户管理-列表';
 	    $group_id = intval($this->getVar('group_id'));
 	    $this->view->group_id = $group_id ;
- 
-	    
-	    if(!$this->request()->isAjax()){
+ 	    if(!$this->request()->isAjax()){
 	        $layout = $this->getCurrentLayout('common.htm');
 	        $this->setLayout($layout);
 	    }
-	    
-	    //var_dump($this->view->dataUrl);die;
+
+	    $grouplist = Modules_Admin_Models_SysGroup::init()->getUserGroupList();
+	    $this->view->grouplist = $grouplist;
 	    
 	    $this->tpl();
 	}
@@ -29,26 +28,29 @@ class Modules_Admin_Controllers_User extends  Modules_Admin_Controllers_Base {
 	 */
 	public  function addAction(){
 		
+		$grouplist = Modules_Admin_Models_SysGroup::init()->getUserGroupList();
+		$this->view->grouplist = $grouplist;
+		$this->tpl();
+	}
+	
+	public function isOkAction(){
+		$user_id = $this->get('user_id');
+		$ok = $this->get('ok');
+		$res  =  Modules_Admin_Models_SysUser::init()->update($user_id, array('user_isok'=>$ok));
+		$arr = array('status'=>$res,'message'=>'操作成功','success_callback'=>"ajax_flash('user');");
+		$this->abort($arr);
 	}
 	
 	public function jsonAction() {
 	    $group_id = intval($this->getVar('group_id'));
-	    $where = "";
-	    if ( $group_id>0 ) {
-	        $where = " and u.user_group_id = '{$group_id}'";
-	    }
-	    $page = intval($this->getVar('page'));
-	    $rows = intval($this->getVar('rows'));
-	    //$user = $this->_getUserService()->getListBySql($page, $rows, "select u.*,g.group_title from sys_user u left join sys_group g on u.user_group_id=g.group_id where u.user_gd=0 {$where} order by u.user_order asc");
-	    $userModel =Modules_Admin_Models_SysUser::init();
-	    $sql = "select u.*,g.group_title from sys_user u left join sys_group g on u.user_group_id=g.group_id where u.user_gd=0 {$where} order by u.user_order asc";
-	    
-	    $userModel->getListBySql($sql, $page, $limit);
-	    //$user = Modules_Admin_Models_SysUser::init()->sql($sql);
+	    $page =  $this->getVar('page',1);
+	    $rows =  $this->getVar('rows',20);
+	    $user =  Modules_Admin_Models_SysUser::init()->getUserList($page, $rows, $group_id, XK);
 	    $this->view->user = $user;
-	    if ($this->controller->is_ajax()){
-	        $this->tpl();
-	    }
+	    $this->view->isOkUrl = url($this->c,'isOkAction');
+	    $this->view->orderUrl = url($this->c,'orderAction');
+	    $this->tpl();
+	    
 	}
  
 	

@@ -147,8 +147,8 @@ class Cola_Controller
     /**
      * 加载模板
      */
-    protected  function tpl($tpl=null,$layout=null){
-    	NULL== $tpl and $tpl = $this->defaultTpl();
+    public  function tpl($tpl=NULL,$layout=NULL,$isReturn=false){
+    	//NULL== $tpl and $tpl = $this->defaultTpl();
     	if($this->_isCache==true){
 	    	$key = 'views:'.hash('md5',$_SERVER['REQUEST_URI'].$this->_cachePrex);
 	    	
@@ -168,6 +168,8 @@ class Cola_Controller
     			self::cache()->set($key,$content,$this->_lifeTime);
     		}
     		echo $content;
+	    }elseif($isReturn){
+	    	return $this->view->tpl($tpl,$layout,$isReturn);
 	    }else{
 	    	$this->view->tpl($tpl,$layout);
     	}
@@ -225,21 +227,8 @@ class Cola_Controller
     /**
      * 指定默认的模板
      */
-    protected  function defaultTpl(){
-    	$cola = Cola::getInstance();
-    	$dispatchInfo = $cola->getDispatchInfo();
-    	$controller = strtr($dispatchInfo['controller'],array('Controllers_'=>'','controllers_'=>''));
-    	$controller = strtr($controller,array('_'=>'/'));
-    	$action  = strtr($dispatchInfo['action'], array('Action'=>''));
-    	$controller_arr = explode('_', $dispatchInfo['controller']);
-    	$tmp = current($controller_arr);
-    	
-    	if($tmp=='Modules'){
-    		return current($controller_arr).'/'.next($controller_arr).'/Views/'.end($controller_arr).'/'.$action.'.htm';
-    	}
-    	//$modules = array_flip(Cola::config()->get('_modules'));
-    	//die;
-    	return $controller.'/'.$action;
+    public  function defaultTpl(){
+    	return  $this->view->defaultTpl();
     }
 
     /**

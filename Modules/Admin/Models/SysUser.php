@@ -29,9 +29,17 @@ class Modules_Admin_Models_SysUser extends Cola_Model {
 		}
 		return $info;
 	}
-	
+	/**
+	 * 取系统用户信息
+	 * @param int $page
+	 * @param int $rows
+	 * @param int $group_id
+	 * @param string $xk
+	 * 
+	 */
 	public  function getUserList($page,$rows,$group_id,$xk){
-	    if ( $group_id>0 ) {
+	    $where = "";
+		if ( $group_id>0 ) {
 	        $where = " and u.user_group_id = '{$group_id}'";
 	    }
 	    $sql = "select u.*,g.group_title 
@@ -40,6 +48,7 @@ class Modules_Admin_Models_SysUser extends Cola_Model {
 	           where u.user_gd=0 and u.xk= '$xk'
 	           {$where} 
 	           order by u.user_order asc";
+	           
 	    return $this->getListBySql($sql, $page, $rows);
 	     
 	}

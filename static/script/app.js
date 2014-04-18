@@ -103,9 +103,11 @@ function send_form_in(e) {
 function set_form_notice(jsontext) {
         var json = null;
         if (jsontext.length > 0) json = eval("(" + jsontext + ")");
-        var success_callback = ((typeof(json.data.success_callback)!='undefined') && (json.data.success_callback != '')) ? json.data.success_callback : 'page_flash();';
-        var fail_callback = ((typeof(json.data.fail_callback)!='undefined') && (json.data.fail_callback != '')) ? json.data.fail_callback : 'btn_reset();';
+        var success_callback = ((typeof(json.success_callback)!='undefined') && (json.success_callback != '')) ? json.success_callback : 'page_flash();';
+        var fail_callback = ((typeof(json.fail_callback)!='undefined') && (json.fail_callback != '')) ? json.fail_callback : 'btn_reset();';
         if (json.status) {
+        	    //$.messager.alert('提示',json.message,'info');
+        	    //return false;
                 ui_tip('', json.message, json.status, success_callback)
         } else {
                 ui_tip('', json.message, json.status, fail_callback)

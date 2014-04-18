@@ -133,11 +133,12 @@ class Cola_View
      * @param string $file  模板文件
      * @param string $layout  模板父文件
      */
-    public function tpl($file, $layout = NULL, $isReturn = FALSE)
+    public function tpl($file=NULL, $layout = NULL, $isReturn = FALSE)
     {
         ob_start();
         ob_implicit_flush(0);
         NULL == $layout and $layout = $this->_layout;
+        NULL == $file and $file = $this->defaultTpl();
         $view = (array) $this;
         $view['_tpl'] = $file;
         $view['_dir'] = $layout;
@@ -158,7 +159,23 @@ class Cola_View
         }
         echo ob_get_clean();
     }
-
+	
+    public  function defaultTpl(){
+    	$cola = Cola::getInstance();
+    	$dispatchInfo = $cola->getDispatchInfo();
+    	$controller = strtr($dispatchInfo['controller'],array('Controllers_'=>'','controllers_'=>''));
+    	$controller = strtr($controller,array('_'=>'/'));
+    	$action  = strtr($dispatchInfo['action'], array('Action'=>''));
+    	$controller_arr = explode('_', $dispatchInfo['controller']);
+    	$tmp = current($controller_arr);
+    	 
+    	if($tmp=='Modules'){
+    		return current($controller_arr).'/'.next($controller_arr).'/Views/'.end($controller_arr).'/'.$action.'.htm';
+    	}
+    	 
+    	return $controller.'/'.$action;
+    }
+    
     /**
      * Set widgets home dir
      *

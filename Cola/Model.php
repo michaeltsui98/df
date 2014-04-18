@@ -535,27 +535,32 @@ class Cola_Model
     			'count' => $count
     	);
     }
-    
-    public function getListBySql($sql, $page, $limit, $url=null, $ajax = 0)
+    /**
+     * for easyUi dataGrid
+     * @param string $sql
+     * @param int $page
+     * @param int $limit
+     * @return boolean|multitype:Ambigous <multitype:, boolean, mixed, resource> Ambigous <string, NULL, mixed>
+     */
+    public function getListBySql($sql, $page, $limit)
     {
         (int) $page or $page = 1;
         (int) $limit or $limit = 20;
-        $url or $url = $this->getPageUrl();
+        //$url or $url = $this->getPageUrl();
         if ($page > 0) {
             $start = ($page - 1) * $limit;
             $limits = ' limit ' . $start . ',' . $limit;
         }
         $data = $this->sql($sql . $limits);
+        
         $sql = "select count(*) from (" . $sql . ") as sy";
-        $count = $this->db()->col($sql);
-    
-        /* $pager = new Cola_Com_Pager($page, $limit, $count, $url, $ajax);
-        $html = $pager->html(); */
+        $count = $this->db->col($sql);
+        
         if (!$data)
             return false;
         return array(
-                'data' => $data,
-                'count' => $count
+                'rows' => $data,
+                'total' => $count
         );
     }
     

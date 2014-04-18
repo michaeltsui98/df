@@ -35,10 +35,7 @@
 		{include Modules/Admin/Views/Layout/menu}
 		</div>
 	</div>
-	<!--
-	<div data-options="region:'east'" style="width:0px;">
-	</div>
-	-->
+	
 	<div data-options="region:'center'">
 		<div id="tt" class="easyui-tabs" border="false" fit="true">
 			<div title="<!--{$title}-->">
@@ -66,8 +63,8 @@
 			</div>
             </div>
             <div data-options="region:'south',border:false" style="text-align:right;height:35px;padding:5px;overflow:hidden;">
-				<a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:saveForm();">保存</a>
-				<a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:cantForm();">取消</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="javascript:saveForm();">保存</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:cantForm();">取消</a>
             </div>
         </div>
     </div>
@@ -78,8 +75,8 @@
 			</div>
             </div>
             <div data-options="region:'south',border:false" style="text-align:right;height:35px;padding:5px;overflow:hidden;">
-				<a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:okForm();">确定</a>
-				<a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:cantForm('dlgtwo');">取消</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton"  iconCls="icon-ok" onclick="javascript:okForm();">确定</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:cantForm('dlgtwo');">取消</a>
             </div>
         </div>
     </div>
