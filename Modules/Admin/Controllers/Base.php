@@ -43,15 +43,11 @@ class Modules_Admin_Controllers_Base extends  Cola_Controller {
         $this->view->a = $this->a;
         $this->view->menu = $menu;
         $this->view->user = $user;
-        
-        //生成请求地址
-        
+        //后台数据生成请求地址
+        $this->view->getJsonDataUrl  = url($this->c, 'jsonAction');
     }
     
-    public  function getRequestController(){
-    	return $this->c;
-    	
-    }
+ 
     
 	public function __construct(){
 		//登录判断

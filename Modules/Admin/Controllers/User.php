@@ -14,13 +14,21 @@ class Modules_Admin_Controllers_User extends  Modules_Admin_Controllers_Base {
 	    $group_id = intval($this->getVar('group_id'));
 	    $this->view->group_id = $group_id ;
  
+	    
 	    if(!$this->request()->isAjax()){
-	    	$this->setLayout('common.htm');
+	        $layout = $this->getCurrentLayout('common.htm');
+	        $this->setLayout($layout);
 	    }
 	    
-	    //var_dump($this->c);die;
+	    //var_dump($this->view->dataUrl);die;
 	    
 	    $this->tpl();
+	}
+	/**
+	 * 添加用户
+	 */
+	public  function addAction(){
+		
 	}
 	
 	public function jsonAction() {
