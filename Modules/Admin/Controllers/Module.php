@@ -1,26 +1,20 @@
 <?php
 
 /**
- * 后台用户管理
+ * 后台模块管理
  * 
  * @author michaeltsui98@qq.com 2014-04-17
  *
  */
-class Modules_Admin_Controllers_User extends  Modules_Admin_Controllers_Base {
+class Modules_Admin_Controllers_Module extends  Modules_Admin_Controllers_Base {
 	
 	public  function indexAction(){
 		
-	    $this->view->title = '用户管理-列表';
-	    $group_id = intval($this->getVar('group_id'));
-	    $this->view->group_id = $group_id ;
+	    $this->view->title = '后台模块管理-列表';
  	    if(!$this->request()->isAjax()){
 	        $layout = $this->getCurrentLayout('common.htm');
 	        $this->setLayout($layout);
 	    }
-
-	    $grouplist = Modules_Admin_Models_SysGroup::init()->getUserGroupList();
-	    $this->view->grouplist = $grouplist;
-	    
 	    $this->tpl();
 	}
 	/**
@@ -107,11 +101,13 @@ class Modules_Admin_Controllers_User extends  Modules_Admin_Controllers_Base {
 	 * json数据输出
 	 */
 	public function jsonAction() {
-	    $group_id = intval($this->getVar('group_id'));
+	    $module_id = intval($this->getVar('id',0));
 	    $page =  $this->getVar('page',1);
 	    $rows =  $this->getVar('rows',20);
-	    $user =  Modules_Admin_Models_SysUser::init()->getUserList($page, $rows, $group_id, XK);
-	    $this->view->user = $user;
+	    $module =  Modules_Admin_Models_SysModule::init()->getModuleList($module_id, XK);
+	    $sub_module =  Modules_Admin_Models_SysModule::init()->getSubModuleCount(XK);
+	    $this->view->module = $module;
+	    $this->view->sub_module = $sub_module;
 	    $this->view->isOkUrl = url($this->c,'isOkAction');
 	    $this->view->orderUrl = url($this->c,'orderAction');
 	    $this->tpl();

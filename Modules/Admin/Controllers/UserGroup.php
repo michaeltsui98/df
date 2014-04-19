@@ -1,12 +1,12 @@
 <?php
 
 /**
- * 后台用户管理
+ * 后台模块管理
  * 
  * @author michaeltsui98@qq.com 2014-04-17
  *
  */
-class Modules_Admin_Controllers_User extends  Modules_Admin_Controllers_Base {
+class Modules_Admin_Controllers_UserGroup extends  Modules_Admin_Controllers_Base {
 	
 	public  function indexAction(){
 		

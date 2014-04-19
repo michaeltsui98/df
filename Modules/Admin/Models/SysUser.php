@@ -50,8 +50,20 @@ class Modules_Admin_Models_SysUser extends Cola_Model {
 	           order by u.user_order asc";
 	           
 	    return $this->getListBySql($sql, $page, $rows);
-	     
 	}
+	
+	/**
+	 * 检查用户是否可用
+	 * @param string $user_name
+	 * @param string $xk
+	 * @return boolean | int
+	 */
+	public  function checkUserName($user_name,$xk){
+	     $status = false;
+	     $status = $this->count("user_name = '$user_name' and xk = '$xk'");
+	     return $status;
+	}
+	
 	
 	
 	

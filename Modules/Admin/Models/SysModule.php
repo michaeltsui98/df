@@ -29,6 +29,34 @@ class Modules_Admin_Models_SysModule extends Cola_Model {
 	    }
 	    return $this->sql($sql);
 	}
+	/**
+	 * 获取模块列表，及子模块列表
+	 * @param int $module_id
+	 * @param string $xk
+	 */
+	public function getModuleList($module_pid,$xk){
+		 
+		$where = "and module_pid = '$module_pid' ";	
+		$sql = "SELECT * FROM `sys_module` where xk= '$xk' $where";
+		return $this->sql($sql);
+	}
+	/**
+	 * 子模块的统计
+	 */
+	public function getSubModuleCount($xk){
+		$sql = "SELECT b.module_pid,count(*) c from sys_module b 
+			where b.xk='$xk'  and  b.module_pid in(
+			select a.module_id from sys_module a where a.xk = '$xk'
+			 )
+			group by b.module_pid
+			 ";
+	  $data = $this->sql($sql);
+	  $arr = array();
+	  foreach ($data as $v){
+	  	$arr[$v['module_pid']] = $v['c'];
+	  }	
+	  return $arr;
+	}
 	
 }
 

@@ -67,5 +67,16 @@ class Modules_Admin_Controllers_Base extends  Cola_Controller {
 	    $pager = new Cola_Com_Pager($page, $limit, $count, $url, $ajax);
 	    return $html = $pager->html();
 	}
+	/**
+	 * easyUI ajax 刷新页面
+	 * @param string $table_id  table id="user-dg"  取 user
+	 * @param string $status
+	 * @param string $message
+	 */
+	public function flash_page($table_id,$status,$message=null){
+		null===$message and $message = '操作成功';
+		$arr = array('status'=>$status,'message'=>$message,'success_callback'=>"ajax_flash('$table_id');");
+		$this->abort($arr);
+	}
 		
 } 

@@ -107,10 +107,12 @@ function set_form_notice(jsontext) {
         var fail_callback = ((typeof(json.fail_callback)!='undefined') && (json.fail_callback != '')) ? json.fail_callback : 'btn_reset();';
         if (json.status) {
         	    //$.messager.alert('提示',json.message,'info');
-        	    //return false;
-                ui_tip('', json.message, json.status, success_callback)
+        	    //setInterval(success_callback,50);
+				eval(success_callback);
+        	    //ui_tip('', json.message, json.status, success_callback)
         } else {
-                ui_tip('', json.message, json.status, fail_callback)
+				eval(fail_callback);
+               // ui_tip('', json.message, json.status, fail_callback)
         }
 }
 
@@ -250,7 +252,7 @@ function show_pop_box(t) {
                 n.attr("id", t), n.css("display", "none"), $("body").prepend(n)
         }
         e != "" && $("#lp_pop_container").html(e);
-        var r = ($(window).width() - $("#" + t).width()) / 2;
+        var r = ($(window).widthui_order() - $("#" + t).width()) / 2;
         $("#" + t).css("left", r), $("#" + t).css("display", "block")
 }
 
@@ -387,7 +389,7 @@ function cantForm(dialog_id){
 function ui_tip(title, body, type, callback, time) {
         title == null && (title = '提示');
         body == null && (body = '无');
-        time == null && (time = 2000);
+        time == null && (time = 1000);
         title = title + '(两秒后自动关闭)';
 		$.messager.msg(title,body,type,callback,time);
 }
