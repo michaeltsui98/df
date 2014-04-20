@@ -2,7 +2,8 @@
 	<!--{eval $module [$key]['trindex']=$key;}-->
 	<!--{eval $module [$key]['trid']=$value['module_id'];}-->
 	<!--{eval $module [$key]['parentId']=$value['module_pid'];}-->
-	
+	<!--{eval $module [$key]['id']=$value['module_id'];}-->
+	<!--{eval $module [$key]['text']=$value['module_title'];}-->
 	 {if isset($sub_module[$value['module_id']])}
 	<!--{eval $module [$key]['state']='closed';}-->
 	 {else}

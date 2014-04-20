@@ -1,6 +1,9 @@
 <?php
 
-
+/**
+ * @author michael
+ *
+ */
 class Modules_Admin_Models_SysModule extends Cola_Model {
     
 	protected $_table = 'sys_module';
@@ -37,7 +40,7 @@ class Modules_Admin_Models_SysModule extends Cola_Model {
 	public function getModuleList($module_pid,$xk){
 		 
 		$where = "and module_pid = '$module_pid' ";	
-		$sql = "SELECT * FROM `sys_module` where xk= '$xk' $where";
+		$sql = "SELECT * FROM `sys_module` where xk= '$xk' $where order by module_order asc";
 		return $this->sql($sql);
 	}
 	/**
@@ -50,13 +53,26 @@ class Modules_Admin_Models_SysModule extends Cola_Model {
 			 )
 			group by b.module_pid
 			 ";
-	  $data = $this->sql($sql);
+	  $data = $this->SQL($sql);
 	  $arr = array();
 	  foreach ($data as $v){
 	  	$arr[$v['module_pid']] = $v['c'];
 	  }	
 	  return $arr;
 	}
+	/**
+	 * 检查模块标题是否存在
+	 * @param string $title
+	 * @param string $xk
+	 * @return bool | int
+	 */
+	public function checkModuleTitleAction($title,$xk){
+		$res = false;
+		$res = $this->count("module_title = '$title' and xk= '$xk'");
+		return $res;
+	}
+	
+	
 	
 }
 

@@ -18,84 +18,82 @@ class Modules_Admin_Controllers_Module extends  Modules_Admin_Controllers_Base {
 	    $this->tpl();
 	}
 	/**
-	 * 添加用户
+	 * 添加模块
 	 */
 	public  function addAction(){
-		
-		$grouplist = Modules_Admin_Models_SysGroup::init()->getUserGroupList();
-		$this->view->grouplist = $grouplist;
-		$this->view->check_username_url = url($this->c, 'checkUserNameAction');
+		$this->view->check_module_url = url($this->c, 'checkModuleTitleAction');
+		$this->view->jsonTreeUrl = url($this->c, 'jsonTreeAction');
 		$this->tpl();
 	}
+	/**
+	 * 保存模块信息
+	 */
 	public  function addDoAction(){
 		$data = $this->getVar('data');
 		$data['xk'] = XK;
-		$res = Modules_Admin_Models_SysUser::init()->insert($data);
-		$arr = array('status'=>$res,'message'=>'操作成功','success_callback'=>"ajax_flash('user');");
-		$this->abort($arr);
-		$this->flash_page('user', $res);
+		$data['module_type'] = 1;
+		$res = Modules_Admin_Models_SysModule::init()->insert($data);
+		$this->flash_page('module', $res,null,'treegrid');
 		
 	}
-	public  function checkUserNameAction(){
+	/**
+	 * 检查模块名称
+	 */
+	public  function checkModuleTitleAction(){
 		$user_name = $this->getVar('param');
-        $arr = array('info'=>'用户名已经被使用','status'=>'n');		
-		$status = Modules_Admin_Models_SysUser::init()->checkUserName($user_name, XK);
+        $arr = array('info'=>'模块名已经被使用','status'=>'n');		
+		$status = Modules_Admin_Models_SysModule::init()->checkModuleTitleAction($user_name, XK);
         if(!$status){
-	        $arr = array('info'=>'用户名可以使用','status'=>'y');		
+	        $arr = array('info'=>'模块名可以使用','status'=>'y');		
         }
 		$this->abort($arr);
 	}
 	/**
-	 * 编辑用户信息
+	 * 编辑模块信息
 	 */
 	public  function editAction(){
-		$grouplist = Modules_Admin_Models_SysGroup::init()->getUserGroupList();
-		$this->view->grouplist = $grouplist;
-		$user_id = $this->getVar('user_id');
-		$user = Modules_Admin_Models_SysUser::init()->load($user_id);
-		$this->view->user = $user;
+		 
+		$module_id = $this->getVar('module_id');
+		$module = Modules_Admin_Models_SysModule::init()->load($module_id);
+		$this->view->module = $module;
+		$this->view->jsonTreeUrl = url($this->c, 'jsonTreeAction');
 		$this->tpl();
 	}
 	/**
-	 * 保存编辑用户信息
+	 * 保存编辑模块信息
 	 */
 	public  function editDoAction(){
-		$user_id = $this->getVar('user_id');
+		$module_id = $this->getVar('module_id');
 		$data = $this->getVar('data');
-		$res = Modules_Admin_Models_SysUser::init()->update($user_id, $data);
-		$arr = array('status'=>$res,'message'=>'操作成功','success_callback'=>"ajax_flash('user');");
-		$this->abort($arr);
+		$data['xk'] = XK;
+		$res = Modules_Admin_Models_SysModule::init()->update($module_id, $data);
+		$this->flash_page('module', $res,null,'treegrid');
 	}
 	/**
-	 * 设置用户状态
+	 * 设置模块状态
 	 */
 	public function isOkAction(){
-		$user_id = $this->get('user_id');
+		$module_id = $this->getVar('module_id');
 		$ok = $this->get('ok');
-		$res  =  Modules_Admin_Models_SysUser::init()->update($user_id, array('user_isok'=>$ok));
-		$arr = array('status'=>$res,'message'=>'操作成功','success_callback'=>"ajax_flash('user');");
-		$this->abort($arr);
+		$res  =  Modules_Admin_Models_SysModule::init()->update($module_id, array('module_isok'=>$ok));
+		$this->flash_page('module', $res,null,'treegrid');
 	}
 	/**
 	 * 排序
 	 */
 	public function orderAction(){
-		$user_id = $this->get('user_id');
-		$type = $this->get('type');
+		$module_id = $this->getVar('module_id');
 		$obj_id = $this->get('obj_id');
-		
-		$res  =  Modules_Admin_Models_SysUser::init()->update($user_id, array('user_order'=>$obj_id));
-		$arr = array('status'=>$res,'message'=>'操作成功','success_callback'=>"ajax_flash('user');");
-		$this->abort($arr);
+		$res  =  Modules_Admin_Models_SysModule::init()->update($module_id, array('module_order'=>$obj_id));
+		$this->flash_page('module', $res,null,'treegrid');
 	}
 	/**
-	 * 删除用户
+	 * 删除模块
 	 */
 	public function delAction(){
-		$user_id = $this->get('user_id');
-		$res  =  Modules_Admin_Models_SysUser::init()->delete($user_id);
-		$arr = array('status'=>$res,'message'=>'操作成功','success_callback'=>"ajax_flash('user');");
-		$this->abort($arr);
+		$module_id = $this->getVar('module_id');
+		$res  =  Modules_Admin_Models_SysModule::init()->delete($module_id);
+		$this->flash_page('module', $res,null,'treegrid');
 	}
 	/**
 	 * json数据输出
@@ -111,7 +109,19 @@ class Modules_Admin_Controllers_Module extends  Modules_Admin_Controllers_Base {
 	    $this->view->isOkUrl = url($this->c,'isOkAction');
 	    $this->view->orderUrl = url($this->c,'orderAction');
 	    $this->tpl();
-	    
+	}
+	/**
+	 * 权限数据输出
+	 */
+	public function jsonTreeAction() {
+	    $module_id = intval($this->getVar('id',0));
+	    $module =  Modules_Admin_Models_SysModule::init()->getModuleList($module_id, XK);
+	    $sub_module =  Modules_Admin_Models_SysModule::init()->getSubModuleCount(XK);
+	    $this->view->module = $module;
+	    $this->view->id = $module_id;
+	    $this->view->sub_module = $sub_module;
+	     
+	    $this->tpl();
 	}
  
 	

@@ -9,109 +9,91 @@
 class Modules_Admin_Controllers_UserGroup extends  Modules_Admin_Controllers_Base {
 	
 	public  function indexAction(){
-		
-	    $this->view->title = '用户管理-列表';
-	    $group_id = intval($this->getVar('group_id'));
-	    $this->view->group_id = $group_id ;
+	    $this->view->title = '用户组组管理-列表';
  	    if(!$this->request()->isAjax()){
 	        $layout = $this->getCurrentLayout('common.htm');
 	        $this->setLayout($layout);
 	    }
-
-	    $grouplist = Modules_Admin_Models_SysGroup::init()->getUserGroupList();
-	    $this->view->grouplist = $grouplist;
-	    
 	    $this->tpl();
 	}
 	/**
-	 * 添加用户
+	 * 添加用户组
 	 */
 	public  function addAction(){
-		
-		$grouplist = Modules_Admin_Models_SysGroup::init()->getUserGroupList();
-		$this->view->grouplist = $grouplist;
-		$this->view->check_username_url = url($this->c, 'checkUserNameAction');
+		$this->view->checkGroupNameUrl = url($this->c,'checkNameAction');
 		$this->tpl();
 	}
+	
 	public  function addDoAction(){
 		$data = $this->getVar('data');
 		$data['xk'] = XK;
-		$res = Modules_Admin_Models_SysUser::init()->insert($data);
-		$arr = array('status'=>$res,'message'=>'操作成功','success_callback'=>"ajax_flash('user');");
-		$this->abort($arr);
-		$this->flash_page('user', $res);
+		$res = Modules_Admin_Models_SysGroup::init()->insert($data);
+		$this->flash_page('usergroup', $res);
 		
 	}
-	public  function checkUserNameAction(){
-		$user_name = $this->getVar('param');
-        $arr = array('info'=>'用户名已经被使用','status'=>'n');		
-		$status = Modules_Admin_Models_SysUser::init()->checkUserName($user_name, XK);
+	public  function checkNameAction(){
+		$name = $this->getVar('param');
+        $arr = array('info'=>'名字已经被使用','status'=>'n');		
+		$status = Modules_Admin_Models_SysGroup::init()->checkGroupName($name, XK);
         if(!$status){
-	        $arr = array('info'=>'用户名可以使用','status'=>'y');		
+	        $arr = array('info'=>'名字可以使用','status'=>'y');		
         }
 		$this->abort($arr);
 	}
 	/**
-	 * 编辑用户信息
+	 * 编辑用户组信息
 	 */
 	public  function editAction(){
-		$grouplist = Modules_Admin_Models_SysGroup::init()->getUserGroupList();
-		$this->view->grouplist = $grouplist;
-		$user_id = $this->getVar('user_id');
-		$user = Modules_Admin_Models_SysUser::init()->load($user_id);
-		$this->view->user = $user;
+		$group_id = $this->getVar('group_id');
+		$group = Modules_Admin_Models_SysGroup::init()->load($group_id);
+		$this->view->group = $group;
 		$this->tpl();
 	}
 	/**
-	 * 保存编辑用户信息
+	 * 保存编辑用户组信息
 	 */
 	public  function editDoAction(){
-		$user_id = $this->getVar('user_id');
+		$group_id = $this->getVar('group_id');
 		$data = $this->getVar('data');
-		$res = Modules_Admin_Models_SysUser::init()->update($user_id, $data);
-		$arr = array('status'=>$res,'message'=>'操作成功','success_callback'=>"ajax_flash('user');");
-		$this->abort($arr);
+		$res = Modules_Admin_Models_SysGroup::init()->update($group_id, $data);
+		$this->flash_page('usergroup', $res);
 	}
 	/**
-	 * 设置用户状态
+	 * 设置用户组状态
 	 */
 	public function isOkAction(){
-		$user_id = $this->get('user_id');
+		$group_id = $this->get('group_id');
 		$ok = $this->get('ok');
-		$res  =  Modules_Admin_Models_SysUser::init()->update($user_id, array('user_isok'=>$ok));
-		$arr = array('status'=>$res,'message'=>'操作成功','success_callback'=>"ajax_flash('user');");
-		$this->abort($arr);
+		$res  =  Modules_Admin_Models_SysGroup::init()->update($group_id, array('group_isok'=>$ok));
+		$this->flash_page('usergroup', $res);
 	}
 	/**
 	 * 排序
 	 */
 	public function orderAction(){
-		$user_id = $this->get('user_id');
+		$group_id = $this->get('group_id');
 		$type = $this->get('type');
 		$obj_id = $this->get('obj_id');
-		
-		$res  =  Modules_Admin_Models_SysUser::init()->update($user_id, array('user_order'=>$obj_id));
-		$arr = array('status'=>$res,'message'=>'操作成功','success_callback'=>"ajax_flash('user');");
-		$this->abort($arr);
+		$res  =  Modules_Admin_Models_SysGroup::init()->update($group_id, array('group_order'=>$obj_id));
+		$this->flash_page('usergroup',$res);
 	}
 	/**
-	 * 删除用户
+	 * 删除用户组
 	 */
 	public function delAction(){
-		$user_id = $this->get('user_id');
-		$res  =  Modules_Admin_Models_SysUser::init()->delete($user_id);
-		$arr = array('status'=>$res,'message'=>'操作成功','success_callback'=>"ajax_flash('user');");
-		$this->abort($arr);
+		$group_id = $this->get('group_id');
+		$res  =  Modules_Admin_Models_SysGroup::init()->delete($group_id);
+		$this->flash_page('usergroup', $res);
 	}
 	/**
 	 * json数据输出
 	 */
 	public function jsonAction() {
-	    $group_id = intval($this->getVar('group_id'));
+	     
 	    $page =  $this->getVar('page',1);
 	    $rows =  $this->getVar('rows',20);
-	    $user =  Modules_Admin_Models_SysUser::init()->getUserList($page, $rows, $group_id, XK);
-	    $this->view->user = $user;
+	    $group =  Modules_Admin_Models_SysGroup::init()->getGroupList(XK, $page, $rows);
+	    $this->view->group = $group;
 	    $this->view->isOkUrl = url($this->c,'isOkAction');
 	    $this->view->orderUrl = url($this->c,'orderAction');
 	    $this->tpl();

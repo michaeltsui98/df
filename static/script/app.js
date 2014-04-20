@@ -122,7 +122,7 @@ function page_flash() {
 function ajax_flash(c,type) {
 		obj = $('#'+c+"-dg");
 		if (obj) {
-			if(typeof(type)=='undefined'){
+			if(typeof(type)=='undefined' || type=='null'){
 				obj.datagrid('reload');
 			}else{
 				obj.treegrid('reload');

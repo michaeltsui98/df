@@ -73,9 +73,13 @@ class Modules_Admin_Controllers_Base extends  Cola_Controller {
 	 * @param string $status
 	 * @param string $message
 	 */
-	public function flash_page($table_id,$status,$message=null){
+	public function flash_page($table_id,$status,$message=null,$type=null){
 		null===$message and $message = '操作成功';
-		$arr = array('status'=>$status,'message'=>$message,'success_callback'=>"ajax_flash('$table_id');");
+		if($type!=null){
+			$arr = array('status'=>$status,'message'=>$message,'success_callback'=>"ajax_flash('$table_id','$type');");
+		}else{
+			$arr = array('status'=>$status,'message'=>$message,'success_callback'=>"ajax_flash('$table_id');");
+		}
 		$this->abort($arr);
 	}
 		
