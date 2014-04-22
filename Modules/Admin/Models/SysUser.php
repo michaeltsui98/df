@@ -19,7 +19,7 @@ class Modules_Admin_Models_SysUser extends Cola_Model {
 	 * @return boolean|Ambigous <multitype:, boolean>
 	 */
 	public  function checkLogin($user_name,$password,$xk){
-	    $arr = array('fileds' => 'user_name,user_realname,user_group_id,user_uid',
+	    $arr = array('fileds' => 'user_id,user_name,user_realname,user_group_id,user_uid',
 	             'where' => "user_name = '$user_name' and user_pass = '$password' and xk = '$xk'"
 	         , 'order' => null, 'start' => -1, 'limit' => 1);
 		$info = $this->find($arr);

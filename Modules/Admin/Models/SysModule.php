@@ -53,7 +53,7 @@ class Modules_Admin_Models_SysModule extends Cola_Model {
 			 )
 			group by b.module_pid
 			 ";
-	  $data = $this->SQL($sql);
+	  $data = $this->sql($sql);
 	  $arr = array();
 	  foreach ($data as $v){
 	  	$arr[$v['module_pid']] = $v['c'];
@@ -70,6 +70,11 @@ class Modules_Admin_Models_SysModule extends Cola_Model {
 		$res = false;
 		$res = $this->count("module_title = '$title' and xk= '$xk'");
 		return $res;
+	}
+	
+	public function getTreeList($xk, $page,$rows,$where, $order, $type){
+	    $sql = "select * from {$this->_table}  where xk='$xk' $where  order by  $order";
+	    return $this->getListBySql($sql, $page, $rows,$type,$this->_pk,'module_pid','module_title','module_isok');
 	}
 	
 	

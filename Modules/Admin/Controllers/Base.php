@@ -6,39 +6,28 @@
  * @author michaeltsui98@qq.com  2014-04-17
  *
  */
-include S_ROOT.'Models/AdminFunc.php';
 
-class Modules_Admin_Controllers_Base extends  Cola_Controller {
+
+class Modules_Admin_Controllers_Base extends  Controllers_Base {
 	
-    public $c;
     
-    public $a;
-    
-    public $xk;
     
     public $html;
     
     /**
      * 前置执行Action
      */
-    public function before()
+    public function adminBefore()
     {
-        $xk  = $this->getVar('xk');
-        $this->c = Cola::getInstance()->dispatchInfo['controller'];
-        $this->a = Cola::getInstance()->dispatchInfo['action'];
-        
         $user = $_SESSION['admin_user'];
-        
         // 如果用户没有登录，或者没有选择学科，退出到登录界面
-        if(!isset($user['user_uid']) or !$xk){
+        if(!isset($user['user_uid']) or !XK){
             $this->redirect(BASE_PATH.'/index.php/Admin/Sign');
             die;
         }
         
         /* 后台菜单列表 */
-        $menu = Modules_Admin_Models_SysModule::init()->getMenu($user['user_group_id'], $xk);
-        
-        define('XK', $xk);
+        $menu = Modules_Admin_Models_SysModule::init()->getMenu($user['user_group_id'], XK);
         $this->view->c = $this->c;
         $this->view->a = $this->a;
         $this->view->menu = $menu;
@@ -58,8 +47,8 @@ class Modules_Admin_Controllers_Base extends  Cola_Controller {
  
     
 	public function __construct(){
-		//登录判断
-		$this->before();
+		parent::__construct();
+		$this->adminBefore();
 	}
 	
 	public function page($page,$limit,$count,$ajax){
@@ -76,11 +65,17 @@ class Modules_Admin_Controllers_Base extends  Cola_Controller {
 	public function flash_page($table_id,$status,$message=null,$type=null){
 		null===$message and $message = '操作成功';
 		if($type!=null){
+		    //刷新treegrid
 			$arr = array('status'=>$status,'message'=>$message,'success_callback'=>"ajax_flash('$table_id','$type');");
 		}else{
+		    //刷新datagrid
 			$arr = array('status'=>$status,'message'=>$message,'success_callback'=>"ajax_flash('$table_id');");
 		}
 		$this->abort($arr);
+	}
+	public  function alert_page($table_id,$status,$message){
+	    $arr = array('status'=>$status,'message'=>$message,'success_callback'=>"ajax_flash('$table_id');");
+	    $this->abort($arr);
 	}
 		
 } 

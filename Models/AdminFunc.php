@@ -65,14 +65,14 @@ function url($c,$a){
     ///df/index.php/Admin/Index/index/xk/sm
     //Modules_Admin_Controllers_Index   
     //indexAction 
-    
-    
+     
     $tmp = explode('_', $c);
-    if(current($tmp)=='Modules'){
+    $prefix = current($tmp);
+    $controller = '';
+    if($prefix=='Modules' or $prefix == 'Controllers'){
     	$controller = next($tmp).'/'.end($tmp);
-    }else{
-    	return '';
-    }
+    } 
+    
     return BASE_PATH.'/index.php/'.$controller.'/'.strtr($a,array('Action'=>'')).'/xk/'.XK;
     
 	 

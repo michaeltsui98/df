@@ -6,10 +6,7 @@ class Controllers_Index extends Cola_Controller
      * @var Models_Index
      */
    protected static  $_model = NULL;
-    
-    function __construct(){
-       
-    }
+ 
     
     function indexAction(){
             
@@ -18,9 +15,9 @@ class Controllers_Index extends Cola_Controller
          $layout = 'layout/index';
          $this->setLayout($layout);
          
-        // $log = Cola_Model::init()->sql("select * from sch_log");
+       
          $this->view->vars = get_defined_vars();
-         //$this->setViewCache(false);
+        
          $this->tpl();
           
     }

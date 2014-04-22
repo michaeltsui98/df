@@ -4,7 +4,7 @@
 class Modules_Admin_Controllers_Sign extends  Cola_Controller {
 	
 	public  function indexAction(){
-		
+		//var_dump($_SESSION);
 	    $this->tpl();
 	}
 	
@@ -22,6 +22,13 @@ class Modules_Admin_Controllers_Sign extends  Cola_Controller {
 		 
 		
 		//var_dump($user_name,$password);
+	}
+	/**
+	 * 退出后台
+	 */
+	public function exitAction(){
+		unset($_SESSION['admin_user']);
+		$this->redirect(BASE_PATH.'/index.php/Admin/Sign/index');
 	}
 	
 }

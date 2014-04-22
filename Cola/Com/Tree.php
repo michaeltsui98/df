@@ -283,5 +283,113 @@ class Cola_Com_Tree
     {
         return(strpos(',,' . $list . ',', ',' . $item . ','));
     }
+    
+    public static function draw_tree($arr, $tree, $level, &$temp_arr, $out, $index,
+            $id, $pid, $name, $cookfiled = null, $cookfiledvalue = null)
+    {
+        $level++;
+        $prefix0 = str_pad('└──', $level, '─', STR_PAD_RIGHT);
+        $prefix1 = str_pad('├──', $level, '─', STR_PAD_RIGHT);
+        $n = str_pad('', $level * 24, '&nbsp;', STR_PAD_RIGHT);
+        $all = count($arr) - 1;
+        //$n = str_replace("-", "&nbsp;", $n);
+        foreach ($arr as $k2 => $v2) {
+            if ($k2 != $all)
+                $prefix = $prefix1;
+            else
+                $prefix = $prefix0;
+            $idvalue = $v2[$id];
+            $namevalue = $v2[$name];
+            if ($out == 'option') {
+                if (isset($cookfiled)) {
+                    if ($v2[$cookfiled] == $cookfiledvalue) {
+                        $v2[$name] = '----------';
+                        $v2[$id] = '';
+                    }
+                }
+                if ($index == $idvalue) {
+                    $v2['option'] = "<option value=\"{$v2[$id]}\" selected=\"selected\">{$n}{$prefix}{$v2[$name]}</option>";
+                } else {
+                    $v2['option'] = "<option value=\"{$v2[$id]}\">{$n}{$prefix}{$v2[$name]}</option>";
+                }
+            } elseif ($out == 'cat') {
+                $v2['ext'] = $n . $prefix;
+                $v2['level'] = $level;
+            } else {
+                if (isset($cookfiled)) {
+                    if ($v2[$cookfiled] == $cookfiledvalue) {
+                        $v2[$name] = '----------';
+                        $v2[$id] = '';
+                    }
+                }
+                $v2['ext'] = $n . $prefix;
+                $v2['level'] = $level;
+            }
+            if (isset($tree[$idvalue])) {
+                $v2['have_child'] = 1;
+                $temp_arr[] = $v2;
+                self::draw_tree($tree[$idvalue], $tree, $level, $temp_arr, $out, $index, $id, $pid,
+                        $name);
+            } else {
+                $v2['have_child'] = 0;
+                $temp_arr[] = $v2;
+            }
+        }
+    }
+    
+    public static function get_trees($array, &$temp_arr, $out = 'option', $index = null,
+            $id = 'id', $pid = 'pid', $name = 'name', $cookfiled = null, $cookfiledvalue = null)
+    {
+        $tree = array();
+        if ($array) {
+            foreach ($array as $v) {
+                $pt = $v[$pid];
+                $list = isset($tree[$pt]) ? $tree[$pt] : array();
+                array_push($list, $v);
+                $tree[$pt] = $list;
+            }
+        }
+        if ($tree) {
+            @$tree[0] or $tree[0] = $tree[$array[0][$pid]];
+            foreach ($tree[0] as $k => $v) {
+                $idvalue = $v[$id];
+                $namevalue = $v[$name];
+                if ($out == 'option') {
+                    if (isset($cookfiled)) {
+                        if ($v[$cookfiled] == $cookfiledvalue) {
+                            $v[$name] = '----------';
+                            $v[$id] = '';
+                        }
+                    }
+                    if ($index == $v[$id]) {
+                        $v['option'] = "<option value=\"{$v[$id]}\" selected=\"selected\">{$v[$name]}</option>";
+                    } else {
+                        $v['option'] = "<option value=\"{$v[$id]}\">{$v[$name]}</option>";
+                    }
+                } elseif ($out == 'cat') {
+                    $v['ext'] = '';
+                    $v['level'] = 0;
+                } else {
+                    if (isset($cookfiled)) {
+                        if ($v[$cookfiled] == $cookfiledvalue) {
+                            $v[$name] = '----------';
+                            $v[$id] = '';
+                        }
+                    }
+                    $v2['ext'] = '';
+                    $v['level'] = 0;
+                }
+                if (isset($tree[$idvalue])) {
+                    $v['have_child'] = 1;
+                    $temp_arr[] = $v;
+                    self::draw_tree($tree[$idvalue], $tree, 0, $temp_arr, $out, $index, $id, $pid, $name,
+                            $cookfiled, $cookfiledvalue);
+                } else {
+                    $v['have_child'] = 0;
+                    $temp_arr[] = $v;
+                }
+            }
+        }
+    }
 
 }

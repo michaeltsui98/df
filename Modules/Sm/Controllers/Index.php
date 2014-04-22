@@ -8,7 +8,6 @@ class Modules_Sm_Controllers_Index extends  Cola_Controller {
 		$this->layout = $this->getCurrentLayout(__CLASS__).'index.htm';
 	}
 	
-	
 	public function indexAction(){
 		$v = __CLASS__;
 		$this->view->v = $v;

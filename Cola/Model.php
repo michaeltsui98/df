@@ -542,7 +542,7 @@ class Cola_Model
      * @param int $limit
      * @return boolean|multitype:Ambigous <multitype:, boolean, mixed, resource> Ambigous <string, NULL, mixed>
      */
-    public function getListBySql($sql, $page, $limit)
+    public function getListBySql($sql, $page, $limit,$type=null,$id='',$pid='',$name='',$status='')
     {
         (int) $page or $page = 1;
         (int) $limit or $limit = 20;
@@ -555,6 +555,14 @@ class Cola_Model
         
         $sql = "select count(*) from (" . $sql . ") as sy";
         $count = $this->db->col($sql);
+        
+        if ($type != null) {
+            
+            $optionlist = array();
+            Cola_Com_Tree::get_trees($data, $optionlist, $type, null, $id, $pid,
+                    $name, $status, 0);
+            $data = $optionlist;
+        }
         
         if (!$data)
             return false;
