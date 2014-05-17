@@ -26,9 +26,16 @@ class Controllers_Index extends Cola_Controller
         
     }
     function getCacheAction(){
-         
-         
-        phpinfo();
+        $sid = $this->getVar('sid');
+        $host = $this->getVar('host');
+        $c173 = Cola_Com_Cache::factory(Cola::getConfig('_cache173')); 
+        $c174 = Cola_Com_Cache::factory(Cola::getConfig('_cache174')); 
+        if($host=='173'){
+        	$val= $c173->get($sid);
+        }elseif($host=='174'){
+        	$val= $c174->get($sid);
+        }
+        var_dump($val);
     }
  
     
